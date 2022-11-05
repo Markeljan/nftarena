@@ -39,7 +39,7 @@ contract NFTArena is ERC1155 {
         uint256 startTime;
     }
 
-    constructor(string memory _baseURI)
+    constructor()
         ERC1155(
             "https://bafybeihfvy2hmcnvpax6anx3tgx53qie4nj32eqtuehsu2g5c5hx3ukxc4.ipfs.nftstorage.link/"
         )
@@ -64,7 +64,7 @@ contract NFTArena is ERC1155 {
     function uri(uint256 _id) public view override returns (string memory) {
         //require(_exists(id), "Nonexistant token");
         string memory s = string(
-            abi.encodePacked(baseURI, Strings.toString(_id))
+            abi.encodePacked(baseURI, Strings.toString(_id), ".png")
         );
         return s;
     }
