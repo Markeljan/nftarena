@@ -14,6 +14,7 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
+    "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@rainbow-me/rainbowkit": "^0.7.4",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
@@ -24,8 +25,8 @@
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "@vitejs/plugin-react": "^2.2.0",
-    "typescript": "^4.6.4",
     "hardhat": "^2.12.2",
+    "typescript": "^4.6.4",
     "vite": "^3.2.0"
   }
 }
