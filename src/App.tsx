@@ -13,8 +13,9 @@ export default function App() {
 
   useEffect(() => {
     console.log("address", address);
-    console.log("chain", chainId);
-    console.log(CONTRACTS[chainId?]);
+    console.log("chain", chain?.name);
+    console.log(CONTRACTS[chain?.name]);
+    // console.log(CONTRACTS[chain?.id as keyof typeof CONTRACTS]);
   }, []);
   return (
     <MainContext.Provider value={CONTRACTS}>
