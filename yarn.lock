@@ -759,6 +759,11 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+"@fontsource/roboto@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.8.tgz#56347764786079838faf43f0eeda22dd7328437f"
+  integrity sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"
@@ -847,6 +852,13 @@
   version "5.10.12"
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.10.12.tgz#ff36abc5f4aac3c762d116e12ab51c2688d93da1"
   integrity sha512-cR8lOS606G++iVHR8I6ySgMAEiPoA3DxO/nLeqiv7w7d1707kvKoV4/7SWjh4ui+kHb052xlf/G196q2EKx31w==
+
+"@mui/icons-material@^5.10.9":
+  version "5.10.9"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.10.9.tgz#f9522c49797caf30146acc576e37ecb4f95bbc38"
+  integrity sha512-sqClXdEM39WKQJOQ0ZCPTptaZgqwibhj2EFV9N0v7BU1PO8y4OcX/a2wIQHn4fNuDjIZktJIBrmU23h7aqlGgg==
+  dependencies:
+    "@babel/runtime" "^7.19.0"
 
 "@mui/material@^5.10.12":
   version "5.10.12"
