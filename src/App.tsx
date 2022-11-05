@@ -14,7 +14,7 @@ export default function App() {
   useEffect(() => {
     console.log("address", address);
     console.log("chain", chain?.name);
-    console.log(CONTRACTS[chain?.name]);
+    // console.log(CONTRACTS[chain?.name]);
     // console.log(CONTRACTS[chain?.id as keyof typeof CONTRACTS]);
   }, []);
   return (
