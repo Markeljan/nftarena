@@ -43,22 +43,14 @@ export default function Train({}) {
         component="img"
         src={currentPlayer && currentPlayer.uri}
         width={"20%"}
-        height={"20%"}
+        height={"30%"}
         position={"absolute"}
         top="25%"
-        left="30%"
+        left="40%"
       ></Box>
 
       {currentPlayer && (
-        <Box width={"50%"} height={"50%"} position={"absolute"}>
-          <Typography fontSize={24}>
-            {currentPlayer.status == 2 ? startTime : "not training"} Training info
-          </Typography>
-        </Box>
-      )}
-
-      {currentPlayer && (
-        <Box width={"50%"} height={"50%"} position={"absolute"} top="60%" left="30%">
+        <Box width={"50%"} height={"50%"} position={"absolute"} top="60%" left="37%">
           <Typography fontSize={24}>
             {currentPlayer.status == 2 ? "You are Training" : "You Are Not Training"}
           </Typography>
@@ -67,16 +59,16 @@ export default function Train({}) {
 
       {currentPlayer && (
         <Box width={"50%"} height={"50%"} position={"absolute"} top="90%" left="70%">
-          <Typography fontSize={24}>{Date.now() - startTime} differnce</Typography>
+          <Typography fontSize={24}></Typography>
         </Box>
       )}
 
-      <Box position={"absolute"} top="80%" left="20%">
+      <Box position={"absolute"} top="80%" left="30%">
         <Button onClick={() => NFTARENA_WRITE.startTraining(currentPlayer.tokenId)}>
           Begin Training
         </Button>
       </Box>
-      <Box position={"absolute"} top="80%" left="45%">
+      <Box position={"absolute"} top="80%" left="55%">
         <Button onClick={() => NFTARENA_WRITE.endTraining(currentPlayer.tokenId)}>
           Finish Training
         </Button>
