@@ -48,9 +48,9 @@ export default function PlayerCard() {
                 : "training..."}
             </Typography>
 
-            <Box display="flex" justifyContent="space-between" width="100%">
+            <Box display="flex" justifyContent="space-between" width="100%" pt={1}>
               <Typography
-                fontSize={14}
+                fontSize={24}
                 sx={{ cursor: "pointer" }}
                 onClick={() => {
                   if (currentPlayerIndex === 0) {
@@ -63,7 +63,7 @@ export default function PlayerCard() {
                 {"<"}
               </Typography>
               <Typography
-                fontSize={14}
+                fontSize={24}
                 sx={{ cursor: "pointer" }}
                 onClick={() => {
                   if (currentPlayerIndex === userPlayerList.length - 1) {

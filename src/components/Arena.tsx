@@ -16,13 +16,13 @@ export default function Arena({}) {
     const [arenaStatus, setArenaStatus] = useState(true);
 
     useEffect(() => {      
-        async function fetchTrain() {
-            const time = (await NFTARENA_READ?.arena());
-            setArenaStatus(time);
-            
+        async function fetchArena() {
+            const status = (await NFTARENA_READ?.arena());
+            console.log(status[0]);
+            setArenaStatus(status[0]);
         }
         if (NFTARENA_READ && currentPlayer) {
-            fetchTrain();
+            fetchArena();
         }
     }, [NFTARENA_READ, currentPlayer]);
 
@@ -43,8 +43,22 @@ export default function Arena({}) {
           </Button>
         </Box>  
 
+        {currentPlayer && (
+            <Box width={"50%"} height={"50%"} position={"absolute"}>
+                <Typography fontSize={24}>{arenaStatus ? "arena is open" : "can't fight now"}Arena info</Typography>
+            </Box>
+        )} 
+
+        <Box position={"absolute"} top="80%" left="20%">
+            <Button onClick={() => NFTARENA_WRITE.enterArena(currentPlayer.tokenId)}>
+                Enter Arena
+            </Button>
+        </Box>
+
+
+
         <Box position={"absolute"} top="5%" left="40%">
-            <Typography fontSize={24}>Enter the Arena</Typography>
+            <Typography fontSize={24}>Welcome to the Arena</Typography>
         </Box>
 
       </Box>
