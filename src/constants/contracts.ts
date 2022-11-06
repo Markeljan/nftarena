@@ -4,86 +4,10 @@ export const CONTRACTS = {
     //mumbai testnet chainid   
     "Polygon Mumbai": "0xBE3D68FB7ABE6f1BAF9e6516eb811173CF0043D9", 
     //goerli testnet chainid
-    "Optimism Goerli": "0xe7CADBe9B8fd5403cECa9f08797e7BF46a12ed00",
+    "Optimism Goerli": "0x29859738DA0De203B5141F0eB7DB43D059EeEbdB",
 }
 
 export const NFTARENA_ABI = [
-	{
-		"inputs": [],
-		"name": "_mintPlayer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_uri",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"internalType": "uint32",
-				"name": "_originDomain",
-				"type": "uint32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_hp",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_attack",
-				"type": "uint256"
-			},
-			{
-				"internalType": "enum NFTArena.Status",
-				"name": "_status",
-				"type": "uint8"
-			}
-		],
-		"name": "_reMintPlayer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_recipient",
-				"type": "address"
-			}
-		],
-		"name": "aaChangeRecipient",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "aaTestDispatch",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -115,172 +39,6 @@ export const NFTARENA_ABI = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "craftSword",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "endQuest",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "endTraining",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "enterArena",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "fightArena",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint32",
-				"name": "_origin",
-				"type": "uint32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_sender",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes",
-				"name": "_messageBody",
-				"type": "bytes"
-			}
-		],
-		"name": "handle",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "bytes",
-				"name": "",
-				"type": "bytes"
-			}
-		],
-		"name": "onERC1155BatchReceived",
-		"outputs": [
-			{
-				"internalType": "bytes4",
-				"name": "",
-				"type": "bytes4"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "",
-				"type": "bytes"
-			}
-		],
-		"name": "onERC1155Received",
-		"outputs": [
-			{
-				"internalType": "bytes4",
-				"name": "",
-				"type": "bytes4"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -304,91 +62,6 @@ export const NFTARENA_ABI = [
 		],
 		"name": "ReceivedMessageBridgeNFT",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "ids",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "amounts",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "bytes",
-				"name": "data",
-				"type": "bytes"
-			}
-		],
-		"name": "safeBatchTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "data",
-				"type": "bytes"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "sendMessageBridgeNFT",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -457,50 +130,6 @@ export const NFTARENA_ABI = [
 		],
 		"name": "SentMessageBridgeNFT",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			}
-		],
-		"name": "setApprovalForAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "startQuest",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "startTraining",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -594,6 +223,179 @@ export const NFTARENA_ABI = [
 		],
 		"name": "URI",
 		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_recipient",
+				"type": "address"
+			}
+		],
+		"name": "ChangeRecipientGoerli",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_recipient",
+				"type": "address"
+			}
+		],
+		"name": "ChangeRecipientMumbai",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_recipient",
+				"type": "address"
+			}
+		],
+		"name": "ChangeRecipientOptimism",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GOLD",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "PLAYER",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SHIELD",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SILVER",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SWORD",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "URIs",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "_mintPlayer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_uri",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"internalType": "uint32",
+				"name": "_originDomain",
+				"type": "uint32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_hp",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_attack",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum NFTArena.Status",
+				"name": "_status",
+				"type": "uint8"
+			}
+		],
+		"name": "_reMintPlayer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [],
@@ -693,8 +495,14 @@ export const NFTARENA_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "GOLD",
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "bridgeGoerli",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -702,7 +510,146 @@ export const NFTARENA_ABI = [
 				"type": "uint256"
 			}
 		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "bridgeOptimism",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "bridgePolygon",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "craftSword",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "endQuest",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "endTraining",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "enterArena",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "fightArena",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "goerliRecipient",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint32",
+				"name": "_origin",
+				"type": "uint32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_sender",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_messageBody",
+				"type": "bytes"
+			}
+		],
+		"name": "handle",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -758,12 +705,84 @@ export const NFTARENA_ABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bytes",
+				"name": "",
+				"type": "bytes"
+			}
+		],
+		"name": "onERC1155BatchReceived",
+		"outputs": [
+			{
+				"internalType": "bytes4",
+				"name": "",
+				"type": "bytes4"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "",
+				"type": "bytes"
 			}
 		],
-		"name": "owners",
+		"name": "onERC1155Received",
+		"outputs": [
+			{
+				"internalType": "bytes4",
+				"name": "",
+				"type": "bytes4"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "optimismRecipient",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -775,13 +794,19 @@ export const NFTARENA_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "PLAYER",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"name": "owners",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -863,6 +888,11 @@ export const NFTARENA_ABI = [
 				"internalType": "uint256",
 				"name": "endTime",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "complete",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -901,6 +931,72 @@ export const NFTARENA_ABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "ids",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "amounts",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			}
+		],
+		"name": "safeBatchTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			}
+		],
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "sent",
 		"outputs": [
@@ -933,29 +1029,47 @@ export const NFTARENA_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "SHIELD",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
 			}
 		],
-		"stateMutability": "view",
+		"name": "setApprovalForAll",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "SILVER",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "_tokenId",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "startQuest",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "startTraining",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -972,19 +1086,6 @@ export const NFTARENA_ABI = [
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "SWORD",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -1023,6 +1124,11 @@ export const NFTARENA_ABI = [
 				"internalType": "uint256",
 				"name": "startTime",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "complete",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -1042,25 +1148,6 @@ export const NFTARENA_ABI = [
 				"internalType": "string",
 				"name": "",
 				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "URIs",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

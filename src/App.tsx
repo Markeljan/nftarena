@@ -68,9 +68,11 @@ export default function App() {
       for (let i = 0; i < playerCount; i++) {
         existingIdsArray.push((await NFTARENA_READ?.tokenIdsArray(i)).toNumber());
       }
+      console.log(existingIdsArray);
 
       for (let i = 0; i < existingIdsArray.length; i++) {
         player = await NFTARENA_READ?.players(existingIdsArray[i]);
+        console.log("player", player);
         const playerObj = {
           tokenId: player[0]?.toNumber(),
           uri: player[1],
@@ -97,10 +99,6 @@ export default function App() {
       fetchPlayers();
     }
   }, [NFTARENA_READ]);
-
-  useEffect(() => {
-    console.log("userPlayers", userPlayerList);
-  }, [playersList]);
 
   return (
     <MainContext.Provider value={mainContext}>
