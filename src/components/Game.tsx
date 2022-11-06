@@ -32,16 +32,15 @@ export default function Game() {
         <Button variant="contained">Quest 💰</Button>
       </Box>
 
-      <Box display = {training ? "flex" : "none"} width={"80%"} height={"80%"} 
-        bgcolor="black" position={"absolute"} top="10%" left="10%"
-      >
-
-      </Box>
-
-
+      <Box
+        display={training ? "flex" : "none"}
+        width={"80%"}
+        height={"80%"}
+        bgcolor="black"
+        position={"absolute"}
+        top="10%"
+        left="10%"
+      ></Box>
     </Box>
-
-
-
   );
 }

@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 
-export default function PlaerCard() {
+export default function PlayerCard() {
   const { playersList, currentPlayer, setCurrentPlayer } = useContext(MainContext);
 
   return (
@@ -13,21 +13,16 @@ export default function PlaerCard() {
       alignItems="center"
       bgcolor="#e3f2fd"
       p={3}
-      sx={{ border: 1 }}
-      sx={{ borderRadius: '10%' }}
+      sx={{ border: 1, borderRadius: "10%" }}
     >
-      <Box sx={{opacity: 1}} display="flex" flexDirection="column" gap={3}>
+      <Box sx={{ opacity: 1 }} display="flex" flexDirection="column" gap={3}>
         <Box
           component="img"
-          sx={{opacity: 1}}
-          sx={{
-            height: 120,
-            width: 120,
-          }}
+          sx={{ opacity: 1, height: 120, width: 120 }}
           alt="The house from the offer."
           src="/src/assets/nft-preview.gif"
         />
-        <Box sx={{opacity: 1}} display="flex" flexDirection="column" gap={2}>
+        <Box sx={{ opacity: 1 }} display="flex" flexDirection="column" gap={2}>
           <Typography>Player Name</Typography>
           <Typography>Player Level</Typography>
         </Box>
