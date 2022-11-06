@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import {Router} from "@hyperlane-xyz/app/contracts/Router.sol";
 
-contract NFTArena is ERC1155, Router {
+contract NFTArena is ERC1155 {
     uint256 public constant PLAYER = 0;
     uint256 public constant GOLD = 1;
     uint256 public constant SILVER = 2;
@@ -39,7 +39,7 @@ contract NFTArena is ERC1155, Router {
     struct Player {
         uint256 tokenId;
         address owner;
-        uint32 originDomain;
+        uint256 originDomain;
         uint256 hp;
         uint256 attack;
         Status status;
@@ -59,83 +59,95 @@ contract NFTArena is ERC1155, Router {
         address payable hostAddress;
     }
 
-    constructor(uint32 _destinationDomain)
+    uint256 localDomain;
+
+    constructor(uint256 _localDomain)
         ERC1155(
             "https://bafybeihfvy2hmcnvpax6anx3tgx53qie4nj32eqtuehsu2g5c5hx3ukxc4.ipfs.nftstorage.link/"
         )
     {
         baseURI = "https://bafybeihfvy2hmcnvpax6anx3tgx53qie4nj32eqtuehsu2g5c5hx3ukxc4.ipfs.nftstorage.link/";
 
-        destinationDomain = _destinationDomain;
-
-        //mumbai => opkovan
-        if (_destinationDomain == 0x6f702d6b) {
-            _setAbacusConnectionManager(
-                0xb636B2c65A75d41F0dBe98fB33eb563d245a241a
-            );
-            _setInterchainGasPaymaster(
-                0x9A27744C249A11f68B3B56f09D280599585DFBb8
-            );
-        }
-        //opkovan => mumbai
-        if (_destinationDomain == 80001) {
-            _setAbacusConnectionManager(
-                0x740bEd6E4eEc7c57a2818177Fba3f9E896D5DE1c
-            );
-            _setInterchainGasPaymaster(
-                0xD7D2B0f61B834D98772e938Fa64425587C0f3481
-            );
-        }
+        // destinationDomain = _destinationDomain;
+        localDomain = _localDomain;
     }
 
+    // //mumbai => opkovan
+    // if (_destinationDomain == 0x6f702d6b) {
+    //     _setAbacusConnectionManager(
+    //         0xb636B2c65A75d41F0dBe98fB33eb563d245a241a
+    //     );
+    //     _setInterchainGasPaymaster(
+    //         0x9A27744C249A11f68B3B56f09D280599585DFBb8
+    //     );
+    // }
+    // //opkovan => mumbai
+    // if (_destinationDomain == 80001) {
+    //     _setAbacusConnectionManager(
+    //         0x740bEd6E4eEc7c57a2818177Fba3f9E896D5DE1c
+    //     );
+    //     _setInterchainGasPaymaster(
+    //         0xD7D2B0f61B834D98772e938Fa64425587C0f3481
+    //     );
+
+    // }
+    // }
     /////////////////////////HyperLane/////////////////////
     //////////////////////CrossChain Messaging///////////////////
     ///////////////////////////////////////////////////////////
 
-    uint32 private destinationDomain;
-    uint256 public sent;
-    uint256 public received;
-    mapping(uint32 => uint256) public sentTo;
-    mapping(uint32 => uint256) public receivedFrom;
+    // uint32 private destinationDomain;
+    // uint256 public sent;
+    // uint256 public received;
+    // mapping(uint32 => uint256) public sentTo;
+    // mapping(uint32 => uint256) public receivedFrom;
 
-    event SentMessageBridgeNFT(
-        uint32 indexed origin,
-        address indexed owner,
-        uint256 indexed _tokenId
-    );
+    // event SentMessageBridgeNFT(
+    //     uint32 indexed origin,
+    //     address indexed owner,
+    //     uint256 indexed _tokenId
+    // );
 
-    event ReceivedMessageBridgeNFT(
-        uint32 indexed origin,
-        address indexed owner,
-        uint256 indexed _tokenId
-    );
+    // event ReceivedMessageBridgeNFT(
+    //     uint32 indexed origin,
+    //     address indexed owner,
+    //     uint256 indexed _tokenId
+    // );
+    //  //bridgeNFT
+    // function sendMessageBridgeNFT (uint256 _tokenId) internal {
+    //     Player memory playerRef = players[_tokenId];
+    //     sent +=1;
+    //     sentTo[destinationDomain] += 1;
+    //     _dispatchWithGas(
+    //         destinationDomain,
+    //         abi.encode(
+    //             playerRef
+    //         ),
+    //         msg.value
+    //     );
+    //     emit SentMessageBridgeNFT(_localDomain(), msg.sender, _tokenId);
+    // }
 
-    //bridgeNFT
-    function sendMessageBridgeNFT(uint256 _tokenId) internal {
-        Player memory playerRef = players[_tokenId];
-        sent += 1;
-        sentTo[destinationDomain] += 1;
-        _dispatchWithGas(destinationDomain, abi.encode(playerRef), msg.value);
-        emit SentMessageBridgeNFT(_localDomain(), msg.sender, _tokenId);
-    }
+    // function _handle(
+    //     uint32 _origin,
+    //     bytes32 _sender,
+    //     bytes memory _message
+    // ) internal override {
+    //     received += 1;
+    //     receivedFrom[_origin] += 1;
 
-    function _handle(
-        uint32 _origin,
-        bytes32 _sender,
-        bytes memory _message
-    ) internal override {
-        received += 1;
-        receivedFrom[_origin] += 1;
+    //     (Player memory playerRef) = abi.decode(
+    //             _message,
+    //             (Player)
+    //         );
 
-        Player memory playerRef = abi.decode(_message, (Player));
-
-        emit ReceivedMessageBridgeNFT(
-            _origin,
-            playerRef.owner,
-            playerRef.tokenId
-        );
-        _reMintPlayer(playerRef);
-    }
+    //         emit ReceivedMessageBridgeNFT(
+    //             _origin,
+    //             playerRef.owner,
+    //             playerRef.tokenId
+    //         );
+    //         _reMintPlayer(playerRef);
+    // }
 
     modifier isIdle(uint256 _tokenId) {
         require(players[_tokenId].status == Status.idle, "not ready");
@@ -149,7 +161,7 @@ contract NFTArena is ERC1155, Router {
         players[playerCount] = Player(
             playerCount,
             msg.sender,
-            _localDomain(),
+            localDomain,
             10,
             1,
             Status.idle
@@ -158,18 +170,12 @@ contract NFTArena is ERC1155, Router {
         trainings[playerCount] = Train(0);
     }
 
-    function _reMintPlayer(Player memory _playerRef) internal {
-        _mint(msg.sender, PLAYER, 1, "");
+    // function _reMintPlayer(Player memory _playerRef) internal {
+    //     _mint(msg.sender, PLAYER , 1, "");
 
-        players[_playerRef.originDomain + _playerRef.tokenId] = Player(
-            _playerRef.tokenId,
-            _playerRef.owner,
-            _playerRef.originDomain,
-            _playerRef.hp,
-            _playerRef.attack,
-            _playerRef.status
-        );
-    }
+    //     players[_playerRef.originDomain + _playerRef.tokenId] = Player(_playerRef.tokenId, _playerRef.owner, _playerRef.originDomain, _playerRef.hp, _playerRef.attack, _playerRef.status);
+
+    // }
 
     function uri(uint256 _id) public view override returns (string memory) {
         //require(_exists(id), "Nonexistant token");

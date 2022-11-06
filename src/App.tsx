@@ -8,9 +8,16 @@ import Navbar from "./components/Navbar";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
 
+interface Player {
+  address: string;
+  hp: number;
+  attack: number;
+  status: number;
+}
+
 export default function App() {
   const [route, setRoute] = useState("game");
-  const [players, getPlayers] = useState([]);
+  const [playersList, setPlayersList] = useState<Player[]>([]);
   const { address } = useAccount();
   const { chain } = useNetwork();
   const provider = useProvider();
@@ -38,13 +45,27 @@ export default function App() {
   };
 
   //get array of Players
-  useEffect(() => {}, [NFTARENA_READ]);
+  useEffect(() => {
+    async function fetchPlayers() {
+      const playerCount = await NFTARENA_READ?.playerCount();
+      const players = [];
+      let player;
 
-  async function getMyPlayers() {
-    let tempNFTArray = await NFTARENA_READ?.ids();
-    console.log(tempNFTArray);
-  }
-  getMyPlayers();
+      for (let i = 1; i <= playerCount; i++) {
+        player = await NFTARENA_READ?.players(i);
+        players.push(player);
+      }
+      setPlayersList(players);
+    }
+
+    if (NFTARENA_READ) {
+      fetchPlayers();
+    }
+  }, [NFTARENA_READ]);
+
+  useEffect(() => {
+    console.log("playersList", playersList);
+  }, [playersList]);
 
   return (
     <MainContext.Provider value={mainContext}>
