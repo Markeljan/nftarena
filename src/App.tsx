@@ -96,6 +96,8 @@ export default function App() {
     console.log("userPlayers", userPlayerList);
   }, [playersList]);
 
+  
+
   return (
     <MainContext.Provider value={mainContext}>
       <Box

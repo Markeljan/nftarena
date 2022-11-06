@@ -3383,6 +3383,11 @@ typescript@^4.6.4:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.8.4.tgz#c464abca159669597be5f96b8943500b238e60e6"
   integrity sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==
 
+unix-timestamp@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/unix-timestamp/-/unix-timestamp-1.0.2.tgz#4b24396da38cf2a57f26a1ea84010770f7df31c7"
+  integrity sha512-y4ilfqtBKxDeMeRl2cD0O8iZRt0oTMCZcCAu1JFodqdXpu++AtDkb+XRszCH79gh2V0eWijIvBtWAN5fkvUXVQ==
+
 update-browserslist-db@^1.0.9:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.10.tgz#0f54b876545726f17d00cd9a2561e6dade943ff3"

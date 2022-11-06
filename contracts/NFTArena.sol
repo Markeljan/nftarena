@@ -254,7 +254,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
     function startQuest(uint256 _tokenId) external isIdle(_tokenId) {
         players[_tokenId].status = Status.questing;
         Quest storage quest = quests[_tokenId];
-        quest.endTime = block.timestamp + 120;
+        quest.endTime = block.timestamp + 1;
     }
 
     function endQuest(uint256 _tokenId) external {
@@ -286,6 +286,8 @@ contract NFTArena is ERC1155, IMessageRecipient {
         require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
         safeTransferFrom(msg.sender, address(this), 1, 1, "0x0");
         arena.open = false;
+        arena.hostId = _tokenId;
+        arena.hostAddress = payable(msg.sender);
     }
 
     function fightArena(uint256 _tokenId) external isIdle(_tokenId) {
@@ -293,9 +295,11 @@ contract NFTArena is ERC1155, IMessageRecipient {
         require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
         uint256 winner = simulateFight(arena.hostId, _tokenId);
         if (winner == _tokenId) {
-            safeTransferFrom(address(this), msg.sender, 1, 1, "0x0");
+            //safeTransferFrom(address(this), msg.sender, 1, 1, "0x0");
+            _mint(msg.sender, GOLD, 1, "");
         } else {
-            safeTransferFrom(address(this), arena.hostAddress, 1, 1, "0x0");
+            //safeTransferFrom(address(this), arena.hostAddress, 1, 1, "0x0");
+            _mint(msg.sender, GOLD, 1, "");
             safeTransferFrom(msg.sender, arena.hostAddress, 1, 1, "0x0");
         }
         arena.open = true;
@@ -311,13 +315,15 @@ contract NFTArena is ERC1155, IMessageRecipient {
         uint hostHp = host.hp;
         uint challengerHp = challenger.hp;
         while (hostHp > 0 && challengerHp > 0) {
-            challengerHp - host.attack * (random() % 2);
+            challengerHp = challengerHp - host.attack * (random() % 2 + 1);
             if (challengerHp <= 0) {
-                break;
+                return _hostId;
             }
-            hostHp - challenger.attack * (random() % 2);
+            hostHp = hostHp - challenger.attack * (random() % 2 + 1) ;
+            if (hostHp <= 0) {
+                return _challengerId;
+            }
         }
-        return _challengerId;
     }
 
     function random() internal view returns (uint256) {
