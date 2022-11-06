@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
 import Game from "./components/Game";
 import Mint from "./components/Mint";
+import Navbar from "./components/Navbar";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
 
@@ -48,9 +49,8 @@ export default function App() {
         p={2}
         minHeight={"100vh"}
       >
-        <Box display={"flex"} alignItems="right" justifyContent={"right"}>
-          <ConnectButton />
-        </Box>
+        <Navbar />
+
         <Box
           display={"flex"}
           flexDirection="column"
