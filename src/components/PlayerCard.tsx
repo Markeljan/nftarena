@@ -6,6 +6,60 @@ export default function PlayerCard() {
   const { currentPlayer, setCurrentPlayer, userPlayerList } = useContext(MainContext);
   const currentPlayerIndex = userPlayerList.indexOf(currentPlayer);
 
+  if (!currentPlayer) {
+    return(
+      <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      alignItems="center"
+      bgcolor="#e3f2fd"
+      p={3}
+      sx={{ borderRadius: "10%" }}
+    >
+      <Box sx={{ opacity: 1 }} display="flex" flexDirection="column" gap={3}>
+        <Box
+          component="img"
+          sx={{ opacity: 1, height: 120, width: 120 }}
+          alt="NFT image."
+          src="/src/assets/nft-preview.gif"
+        />
+       
+          <Box sx={{ opacity: 1 }} display="flex" flexDirection="column">
+            <Box display="flex" gap={1}>
+              <Typography fontSize={14}>❤️ 00</Typography>
+              <Typography fontSize={14}>🗡️ 00</Typography>
+            </Box>
+            <Typography fontSize={14}>Nomad ...</Typography>
+            <Typography fontSize={14}>Address: ...</Typography>
+            <Typography fontSize={14}>
+              Origin: ...
+            </Typography>
+            <Typography fontSize={14}>
+              Status: ...
+            </Typography>
+
+            <Box display="flex" justifyContent="space-between" width="100%" pt={1}>
+              <Typography
+                fontSize={24}
+                sx={{ cursor: "pointer" }}
+              >
+                {"<"}
+              </Typography>
+              <Typography
+                fontSize={24}
+                sx={{ cursor: "pointer" }}
+              >
+                {">"}
+              </Typography>
+            </Box>
+          </Box>
+        
+      </Box>
+    </Box>
+  );
+  }
+
   return (
     <Box
       display="flex"

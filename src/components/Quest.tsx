@@ -41,7 +41,7 @@ export default function Quest({}) {
       {currentPlayer && (
         <Box width={"50%"} height={"50%"} position={"absolute"} top="5%" left="5%">
           <Typography fontSize={24}>
-            {currentPlayer.status == 1 ? endTime : "Not Currently Questing"}
+            {currentPlayer.status == 1 ? endTime + "You completed the Quest": "Not Currently Questing"}
           </Typography>
         </Box>
       )}
