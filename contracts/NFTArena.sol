@@ -305,12 +305,14 @@ contract NFTArena is ERC1155, IMessageRecipient {
     }
 
     function startQuest(uint256 _tokenId) external isIdle(_tokenId) {
+        require(players[_tokenId].owner == msg.sender);
         require(!quests[_tokenId].complete, "Quest complete.  Bridge!");
         players[_tokenId].status = Status.questing;
         quests[_tokenId].endTime = block.timestamp + 1;
     }
 
     function endQuest(uint256 _tokenId) external {
+        require(players[_tokenId].owner == msg.sender);
         require(
             block.timestamp >= quests[_tokenId].endTime,
             "It's not time to finish quest"
@@ -323,16 +325,15 @@ contract NFTArena is ERC1155, IMessageRecipient {
     }
 
     function startTraining(uint256 _tokenId) external isIdle(_tokenId) {
+        require(players[_tokenId].owner == msg.sender);
         require(!trainings[_tokenId].complete, "Traning complete.  Bridge!");
         players[_tokenId].status = Status.training;
         trainings[_tokenId].startTime = block.timestamp;
     }
 
     function endTraining(uint256 _tokenId) external {
-        require(
-            block.timestamp >= trainings[_tokenId].startTime + 120,
-            "it's too early to pull out"
-        );
+        require(players[_tokenId].owner == msg.sender);
+        require(block.timestamp >= trainings[_tokenId].startTime + 120);
         setIdle(_tokenId);
         players[_tokenId].attack++; //we can make this logic more complex later
         quests[_tokenId].endTime = 0;
@@ -340,52 +341,45 @@ contract NFTArena is ERC1155, IMessageRecipient {
     }
 
     function enterArena(uint256 _tokenId) external isIdle(_tokenId) {
-        require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
+        require(players[_tokenId].owner == msg.sender);
+        require(balanceOf(msg.sender, 1) >= 1);
+        safeTransferFrom(msg.sender, address(this), 1, 1, "0x0");
 
         if (arena.open == false) {
             fightArena(_tokenId);
             return;
         }
         arena.open = false;
-        safeTransferFrom(msg.sender, address(this), 1, 1, "0x0");
+
         arena.hostId = _tokenId;
         arena.hostAddress = payable(msg.sender);
     }
 
     function fightArena(uint256 _tokenId) public isIdle(_tokenId) {
-        require(!arena.open, "arena is empty");
-        require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
         uint256 winner = simulateFight(arena.hostId, _tokenId);
         if (winner == _tokenId) {
             //safeTransferFrom(address(this), msg.sender, 1, 1, "0x0");
-            _mint(msg.sender, GOLD, 1, "");
+            _mint(msg.sender, GOLD, 2, "");
         } else {
             //safeTransferFrom(address(this), arena.hostAddress, 1, 1, "0x0");
-            _mint(arena.hostAddress, GOLD, 1, "");
-            safeTransferFrom(msg.sender, arena.hostAddress, 1, 1, "0x0");
+            _mint(arena.hostAddress, GOLD, 2, "");
         }
         arena.open = true;
     }
 
     function simulateFight(uint256 _hostId, uint256 _challengerId)
-        internal
+        private
         view
         returns (uint256)
     {
-        Player storage host = players[_hostId];
-        Player storage challenger = players[_challengerId];
-        uint hostHp = host.hp;
-        uint challengerHp = challenger.hp;
-        while (hostHp > 0 && challengerHp > 0) {
-            challengerHp = challengerHp - host.attack * (random() % 2);
-            if (challengerHp <= 0) {
-                return _hostId;
-            }
-            hostHp = hostHp - challenger.attack * (random() % 2);
-            if (hostHp <= 0) {
-                return _challengerId;
-            }
+        uint hostHp = players[_hostId].hp + 10000;
+        uint challengerHp = players[_challengerId].hp + 10000;
+        for (uint i = 0; i < 10; i++) {
+            challengerHp -= players[_hostId].attack * (random() % 2);
+            hostHp -= players[_challengerId].attack * (random() % 2);
         }
+        if (challengerHp <= hostHp) return _hostId;
+        else return _challengerId;
     }
 
     function random() internal view returns (uint256) {

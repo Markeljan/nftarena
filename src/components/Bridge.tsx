@@ -50,13 +50,13 @@ export default function Bridge({}) {
       </Box>
 
       <Box display="flex" justifyContent="center" alignItems={"center"} height={"100%"}>
-        <Button onClick={() => NFTARENA_WRITE.sendMessageBridgeNFT(currentPlayer.tokenId)}>
+        <Button onClick={() => NFTARENA_WRITE.bridgePolygon(currentPlayer.tokenId)}>
           Voyage to Polygon
         </Button>
-        <Button onClick={() => NFTARENA_WRITE.sendMessageBridgeNFT(currentPlayer.tokenId)}>
+        <Button onClick={() => NFTARENA_WRITE.bridgeOptimism(currentPlayer.tokenId)}>
           Voyage to Optimism
         </Button>
-        <Button onClick={() => NFTARENA_WRITE.sendMessageBridgeNFT(currentPlayer.tokenId)}>
+        <Button onClick={() => NFTARENA_WRITE.bridgeEthereum(currentPlayer.tokenId)}>
           Voyage to Ethereum
         </Button>
       </Box>
