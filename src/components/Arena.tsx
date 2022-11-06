@@ -45,13 +45,19 @@ export default function Arena({}) {
 
         {currentPlayer && (
             <Box width={"50%"} height={"50%"} position={"absolute"}>
-                <Typography fontSize={24}>{arenaStatus ? "arena is open" : "can't fight now"}Arena info</Typography>
+                <Typography fontSize={24}>{arenaStatus ? "arena is open" : "someone is in the arena"}Arena info</Typography>
             </Box>
         )} 
 
         <Box position={"absolute"} top="80%" left="20%">
             <Button onClick={() => NFTARENA_WRITE.enterArena(currentPlayer.tokenId)}>
                 Enter Arena
+            </Button>
+        </Box>
+
+        <Box position={"absolute"} top="80%" left="60%">
+            <Button onClick={() => NFTARENA_WRITE.fightArena(currentPlayer.tokenId)}>
+                Accept Challenge 
             </Button>
         </Box>
 
