@@ -3,8 +3,7 @@ import { useContext, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function Train({}) {
-
+export default function Arena({}) {
 
     const {
         route,
@@ -13,10 +12,9 @@ export default function Train({}) {
         setShow
       } = useContext(MainContext);
 
-
     return (
         <Box
-        display={show == "train" ? "flex" : "none"}
+        display={show === "arena" ? "flex" : "none"}
         width={"80%"}
         height={"80%"}
         bgcolor="#e3f2fd"
@@ -33,10 +31,9 @@ export default function Train({}) {
 
         <Box position={"absolute"} top="5%" left="40%"         
         >
-          <Typography fontSize={24}>Training Grounds</Typography>
+          <Typography fontSize={24}>Enter the Arena</Typography>
         </Box>
 
       </Box>
     );
 }
-

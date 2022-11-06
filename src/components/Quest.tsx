@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function Train({}) {
+export default function Quest({}) {
 
 
     const {
@@ -14,9 +14,11 @@ export default function Train({}) {
       } = useContext(MainContext);
 
 
+
+
     return (
         <Box
-        display={show == "train" ? "flex" : "none"}
+        display={show === "quest" ? "flex" : "none"}
         width={"80%"}
         height={"80%"}
         bgcolor="#e3f2fd"
@@ -31,12 +33,10 @@ export default function Train({}) {
           </Button>
         </Box>  
 
-        <Box position={"absolute"} top="5%" left="40%"         
-        >
-          <Typography fontSize={24}>Training Grounds</Typography>
+        <Box position={"absolute"} top="5%" left="40%">
+          <Typography fontSize={24}>Time to Quest</Typography>
         </Box>
 
       </Box>
     );
 }
-
