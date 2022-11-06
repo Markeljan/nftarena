@@ -1,30 +1,46 @@
 import { Box, Typography } from "@mui/material";
-import { useContext } from "react";
+import { ethers, providers } from "ethers";
+import { useContext, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import { MainContext } from "../contexts/MainContext";
 
 export default function PlayerCard() {
   const { currentPlayer, setCurrentPlayer, userPlayerList } = useContext(MainContext);
   const currentPlayerIndex = userPlayerList.indexOf(currentPlayer);
+  const { address } = useAccount();
+  const [ENS, setENS] = useState("");
+
+  useEffect(() => {
+    //resolve address to ENS
+    async function resolveAddress() {
+      const provider = new providers.JsonRpcProvider(
+        "https://eth-mainnet.alchemyapi.io/v2/7ifRMY_6b1FpBvwH0rGegS97INzbl4C9"
+      );
+      const ensName = await provider.lookupAddress(address as string);
+      setENS(ensName!);
+    }
+    address && resolveAddress();
+  }, [address]);
 
   if (!currentPlayer) {
-    return(
+    return (
       <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-      alignItems="center"
-      bgcolor="#e3f2fd"
-      p={3}
-      sx={{ borderRadius: "10%" }}
-    >
-      <Box sx={{ opacity: 1 }} display="flex" flexDirection="column" gap={3}>
-        <Box
-          component="img"
-          sx={{ opacity: 1, height: 120, width: 120 }}
-          alt="NFT image."
-          src="/src/assets/nft-preview.gif"
-        />
-       
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        alignItems="center"
+        bgcolor="#e3f2fd"
+        p={3}
+        sx={{ borderRadius: "10%" }}
+      >
+        <Box sx={{ opacity: 1 }} display="flex" flexDirection="column" gap={3}>
+          <Box
+            component="img"
+            sx={{ opacity: 1, height: 120, width: 120 }}
+            alt="NFT image."
+            src="/src/assets/nft-preview.gif"
+          />
+
           <Box sx={{ opacity: 1 }} display="flex" flexDirection="column">
             <Box display="flex" gap={1}>
               <Typography fontSize={14}>❤️ 00</Typography>
@@ -32,32 +48,21 @@ export default function PlayerCard() {
             </Box>
             <Typography fontSize={14}>Nomad ...</Typography>
             <Typography fontSize={14}>Address: ...</Typography>
-            <Typography fontSize={14}>
-              Origin: ...
-            </Typography>
-            <Typography fontSize={14}>
-              Status: ...
-            </Typography>
+            <Typography fontSize={14}>Origin: ...</Typography>
+            <Typography fontSize={14}>Status: ...</Typography>
 
             <Box display="flex" justifyContent="space-between" width="100%" pt={1}>
-              <Typography
-                fontSize={24}
-                sx={{ cursor: "pointer" }}
-              >
+              <Typography fontSize={24} sx={{ cursor: "pointer" }}>
                 {"<"}
               </Typography>
-              <Typography
-                fontSize={24}
-                sx={{ cursor: "pointer" }}
-              >
+              <Typography fontSize={24} sx={{ cursor: "pointer" }}>
                 {">"}
               </Typography>
             </Box>
           </Box>
-        
+        </Box>
       </Box>
-    </Box>
-  );
+    );
   }
 
   return (
@@ -84,7 +89,9 @@ export default function PlayerCard() {
               <Typography fontSize={14}>🗡️ {currentPlayer.attack}</Typography>
             </Box>
             <Typography fontSize={14}>Nomad {currentPlayer.tokenId}</Typography>
-            <Typography fontSize={14}>Address: {currentPlayer.address.substring(0, 6)}</Typography>
+            <Typography fontSize={14}>
+              Address: {ENS ? ENS : currentPlayer.address.substring(0, 6)}
+            </Typography>
             <Typography fontSize={14}>
               Origin:{" "}
               {currentPlayer.originDomain === 80001

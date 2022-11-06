@@ -195,6 +195,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
     /////////////////////////HyperLane/////////////////////
     //////////////////////CrossChain Messaging///////////////////
     ///////////////////////////////////////////////////////////
+
     event SentMessageBridgeNFT(
         uint32 indexed origin,
         address indexed owner,

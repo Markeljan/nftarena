@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
 import Game from "./components/Game";
 import Mint from "./components/Mint";
-import Train from "./components/Train";
 import Navbar from "./components/Navbar";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
@@ -68,11 +67,10 @@ export default function App() {
       for (let i = 0; i < playerCount; i++) {
         existingIdsArray.push((await NFTARENA_READ?.tokenIdsArray(i)).toNumber());
       }
-      console.log(existingIdsArray);
 
       for (let i = 0; i < existingIdsArray.length; i++) {
         player = await NFTARENA_READ?.players(existingIdsArray[i]);
-        console.log("player", player);
+
         const playerObj = {
           tokenId: player[0]?.toNumber(),
           uri: player[1],
