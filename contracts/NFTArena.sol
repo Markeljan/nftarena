@@ -307,8 +307,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
     function startQuest(uint256 _tokenId) external isIdle(_tokenId) {
         require(!quests[_tokenId].complete, "Quest complete.  Bridge!");
         players[_tokenId].status = Status.questing;
-        Quest storage quest = quests[_tokenId];
-        quest.endTime = block.timestamp + 1;
+        quests[_tokenId].endTime = block.timestamp + 1;
     }
 
     function endQuest(uint256 _tokenId) external {
@@ -316,6 +315,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
             block.timestamp >= quests[_tokenId].endTime,
             "It's not time to finish quest"
         );
+        require(players[_tokenId].status == Status.questing);
         setIdle(_tokenId);
         _mint(msg.sender, GOLD, 1, "");
         quests[_tokenId].endTime = 0;
@@ -341,12 +341,13 @@ contract NFTArena is ERC1155, IMessageRecipient {
 
     function enterArena(uint256 _tokenId) external isIdle(_tokenId) {
         require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
+
         if (arena.open == false) {
             fightArena(_tokenId);
             return;
         }
-        safeTransferFrom(msg.sender, address(this), 1, 1, "0x0");
         arena.open = false;
+        safeTransferFrom(msg.sender, address(this), 1, 1, "0x0");
         arena.hostId = _tokenId;
         arena.hostAddress = payable(msg.sender);
     }

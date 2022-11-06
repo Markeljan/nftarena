@@ -1,10 +1,10 @@
 export const CONTRACTS = {
     //optimism goerli testnet chainid 
-    "Goerli": "0x9B42B4993faD01aDDE8E99B117D1F9A0e7eA0B8C",
+    "Goerli": "0x843E499E54d8D0c2274dA668Faa748D8206846f8",
     //mumbai testnet chainid   
-    "Polygon Mumbai": "0xBE3D68FB7ABE6f1BAF9e6516eb811173CF0043D9", 
+    "Polygon Mumbai": "0xb17fDb3212b6F5AE983c8090265A25d8D0A26C49", 
     //goerli testnet chainid
-    "Optimism Goerli": "0x3E465c0C84c946ca2F4c3Cb7E14D308C4Ed2BB43",
+    "Optimism Goerli": "0xdafE7759e06BF0d4Eb7601285430B2451C5e2344",
 }
 
 export const NFTARENA_ABI = [

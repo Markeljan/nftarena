@@ -98,7 +98,7 @@ export default function App() {
     if (NFTARENA_READ) {
       fetchPlayers();
     }
-  }, [NFTARENA_READ]);
+  }, [NFTARENA_READ, route]);
 
   return (
     <MainContext.Provider value={mainContext}>
