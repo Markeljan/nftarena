@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -9,8 +9,24 @@ export default function Train({}) {
         show,
         setShow,
         NFTARENA_WRITE,
-        NFTARENA_READ
-      } = useContext(MainContext);
+        NFTARENA_READ,
+        currentPlayer,
+    } = useContext(MainContext);
+
+    const [startTime, setStartTime] = useState(0);
+
+
+    useEffect(() => {      
+        async function fetchTrain() {
+            const time = (await NFTARENA_READ?.trainings(currentPlayer.tokenId)).toNumber();
+            setStartTime(time);
+            
+        }
+        if (NFTARENA_READ && currentPlayer) {
+            fetchTrain();
+        }
+    }, [NFTARENA_READ, currentPlayer]);
+
 
 
     return (
@@ -34,9 +50,24 @@ export default function Train({}) {
           <Typography fontSize={24}>Training Grounds</Typography>
         </Box>
 
-        <Box position={"absolute"}>
-            <Button onClick={() => NFTARENA_WRITE.startTraining()}>
+        {/* <Box component="img" src={currentPlayer && currentPlayer.uri} 
+            width={"50%"} height={"50%"} position={"absolute"}>
+        </Box> */}
+
+        {currentPlayer && (
+            <Box width={"50%"} height={"50%"} position={"absolute"}>
+                <Typography fontSize={24}>{currentPlayer.status == 2 ?  startTime : "not training"}Training info</Typography>
+            </Box>
+        )}
+
+        <Box position={"absolute"} top="80%" left="20%">
+            <Button onClick={() => NFTARENA_WRITE.startTraining(currentPlayer.tokenId)}>
                 Begin Training
+            </Button>
+        </Box>
+        <Box position={"absolute"}top="80%" left="60%">
+            <Button onClick={() => NFTARENA_WRITE.endTraining(currentPlayer.tokenId)}>
+                Finish Training
             </Button>
         </Box>
 
