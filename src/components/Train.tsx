@@ -5,12 +5,11 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function Train({}) {
 
-
     const {
-        route,
-        setRoute,
         show,
-        setShow
+        setShow,
+        NFTARENA_WRITE,
+        NFTARENA_READ
       } = useContext(MainContext);
 
 
@@ -31,9 +30,14 @@ export default function Train({}) {
           </Button>
         </Box>  
 
-        <Box position={"absolute"} top="5%" left="40%"         
-        >
+        <Box position={"absolute"} top="5%" left="40%">
           <Typography fontSize={24}>Training Grounds</Typography>
+        </Box>
+
+        <Box position={"absolute"}>
+            <Button onClick={() => NFTARENA_WRITE.startTraining()}>
+                Begin Training
+            </Button>
         </Box>
 
       </Box>
