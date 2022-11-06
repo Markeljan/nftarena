@@ -53,7 +53,7 @@ export default function App() {
     setCurrentPlayer,
     userPlayerList,
     show,
-    setShow
+    setShow,
   };
 
   //get array of Players
@@ -65,6 +65,7 @@ export default function App() {
       let player: any[];
       for (let i = 1; i <= playerCount; i++) {
         player = await NFTARENA_READ?.players(i);
+        console.log(player);
         const playerObj = {
           tokenId: player[0].toNumber(),
           uri: player[1],
@@ -95,8 +96,6 @@ export default function App() {
   useEffect(() => {
     console.log("userPlayers", userPlayerList);
   }, [playersList]);
-
-  
 
   return (
     <MainContext.Provider value={mainContext}>
