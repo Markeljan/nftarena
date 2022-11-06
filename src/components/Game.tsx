@@ -4,20 +4,13 @@ import { MainContext } from "../contexts/MainContext";
 
 export default function Game() {
   const {
-    setShowTavern,
-    showTavern,
-    showQuests,
-    setShowQuests,
-    buttonBackground,
-    selectedNFTEl,
-    buttonHoverBackground,
-    buttonActiveBackground,
+    route,
+    setRoute
   } = useContext(MainContext);
 
   return (
     <Box
-      hidden={showTavern || showQuests ? true : false}
-      display="flex"
+      display={route === "game" ? "flex" : "none"}
       flexDirection={"column"}
       position={"relative"}
     >
@@ -34,6 +27,17 @@ export default function Game() {
       <Box position={"absolute"} top="25%" left="25%">
         <Button variant="contained">Arena 🥊</Button>
       </Box>
+      
+      <Box position={"absolute"} top="76%" left="40%">
+        <Button variant="contained">Train 🏋️‍♂️</Button>
+      </Box>
+
+      <Box position={"absolute"} top="32%" left="78%">
+        <Button variant="contained">Quest 💰</Button>
+      </Box>
+
+
+
 
       {/*
       </Link>

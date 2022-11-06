@@ -58,7 +58,9 @@ export default function App() {
           alignItems="center"
           gap={5}
         >
-          {route === "game" ? <Game /> : <Mint />}
+          
+          <Game />
+          <Mint />
         </Box>
 
         <Box display={"flex"} justifyContent={"center"} alignItems="center" p={10}>

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -11,6 +11,7 @@ contract NFTArena is ERC1155 {
     uint256 public constant SWORD = 3;
     uint256 public constant SHIELD = 4;
 
+
     string private baseURI;
     uint256 public playerCount;
     bool public arenaOpen;
@@ -20,6 +21,8 @@ contract NFTArena is ERC1155 {
     mapping(uint => Player) public players;
     mapping(uint => Quest) public quests;
     mapping(uint => Train) public trainings;
+    mapping(uint => uint) public URIs;
+    mapping(uint => address) public owners;
 
     enum Status {
         idle,
@@ -39,6 +42,10 @@ contract NFTArena is ERC1155 {
 
     struct Train {
         uint256 startTime;
+    }
+
+    struct Collection {
+        uint256[] nfts;
     }
 
     struct Arena {
@@ -63,7 +70,10 @@ contract NFTArena is ERC1155 {
     function _mintPlayer() external {
         playerCount++;
         _mint(msg.sender, PLAYER, 1, "");
+        owners[playerCount] = msg.sender;
 
+
+        URIs[playerCount] = random() % 598 + 1;
         players[playerCount] = Player(10, 1, Status.idle);
         quests[playerCount] = Quest(0);
         trainings[playerCount] = Train(0);
@@ -72,7 +82,7 @@ contract NFTArena is ERC1155 {
     function uri(uint256 _id) public view override returns (string memory) {
         //require(_exists(id), "Nonexistant token");
         string memory s = string(
-            abi.encodePacked(baseURI, Strings.toString(_id), ".png")
+            abi.encodePacked(baseURI, Strings.toString(URIs[_id]), ".png")
         );
         return s;
     }
@@ -123,42 +133,31 @@ contract NFTArena is ERC1155 {
         require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
         uint256 winner = simulateFight(arena.hostId, _tokenId);
         if (winner == _tokenId) {
-            safeTransferFrom(address(this), msg.sender, 1, 1, "0x0");
+            safeTransferFrom(address(this), msg.sender,  1, 1, "0x0");
         } else {
-            safeTransferFrom(address(this), arena.hostAddress, 1, 1, "0x0");
-            safeTransferFrom(msg.sender, arena.hostAddress, 1, 1, "0x0");
+            safeTransferFrom(address(this), arena.hostAddress,  1, 1, "0x0");
+            safeTransferFrom(msg.sender, arena.hostAddress,  1, 1, "0x0");
         }
         arena.open = false;
     }
 
-    function simulateFight(uint256 _hostId, uint256 _challengerId)
-        internal
-        view
-        returns (uint256)
-    {
+    function simulateFight(uint256 _hostId, uint256 _challengerId) internal view returns(uint256) {
         Player storage host = players[_hostId];
         Player storage challenger = players[_challengerId];
         uint hostHp = host.hp;
         uint challengerHp = challenger.hp;
-        while (hostHp > 0 && challengerHp > 0) {
+        while(hostHp > 0 && challengerHp > 0) {
             challengerHp - host.attack * (random() % 2);
             if (challengerHp <= 0) {
                 break;
             }
             hostHp - challenger.attack * (random() % 2);
         }
-        return _challengerId;
+        return _challengerId; 
     }
 
-    function random() internal view returns (uint256) {
-        return
-            uint256(
-                keccak256(
-                    abi.encodePacked(
-                        block.timestamp + block.difficulty + playerCount
-                    )
-                )
-            );
+    function random() internal view returns(uint256) {
+        return uint256(keccak256(abi.encodePacked(block.timestamp + block.difficulty + playerCount)));
     }
 
     function craftSword(uint256 _tokenId) external isIdle(_tokenId) {
@@ -166,4 +165,18 @@ contract NFTArena is ERC1155 {
         safeTransferFrom(msg.sender, address(this), 1, 10, "0x0");
         _mint(msg.sender, SWORD, 3, "");
     }
+
+    function getMyPlayers() external view returns (uint256[] memory _ids) {
+        _ids = new uint256[](balanceOf(msg.sender, 0));
+        uint256 currentIndex;
+        uint256 _playerCount = playerCount;
+        for (uint256 i = 0; i < _playerCount; i++) {
+            if (owners[i] == msg.sender) {
+                _ids[currentIndex] = i + 1;
+                currentIndex++;
+            }
+        }
+    }
+
+
 }
