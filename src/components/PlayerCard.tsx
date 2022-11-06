@@ -11,20 +11,23 @@ export default function PlaerCard() {
       flexDirection="column"
       justifyContent="space-between"
       alignItems="center"
-      bgcolor="white"
+      bgcolor="#e3f2fd"
       p={3}
+      sx={{ border: 1 }}
+      sx={{ borderRadius: '10%' }}
     >
-      <Box display="flex" flexDirection="column" gap={3}>
+      <Box sx={{opacity: 1}} display="flex" flexDirection="column" gap={3}>
         <Box
           component="img"
+          sx={{opacity: 1}}
           sx={{
-            height: 100,
-            width: 100,
+            height: 120,
+            width: 120,
           }}
           alt="The house from the offer."
           src="/src/assets/nft-preview.gif"
         />
-        <Box display="flex" flexDirection="column" gap={2}>
+        <Box sx={{opacity: 1}} display="flex" flexDirection="column" gap={2}>
           <Typography>Player Name</Typography>
           <Typography>Player Level</Typography>
         </Box>
