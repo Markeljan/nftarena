@@ -1,13 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { ethers, providers } from "ethers";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
+import Game from "./components/Game";
 import Mint from "./components/Mint";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
 
 export default function App() {
+  const [route, setRoute] = useState("game");
   const { address } = useAccount();
   const { chain } = useNetwork();
   const provider = useProvider();
@@ -26,13 +27,20 @@ export default function App() {
     signerOrProvider: signer,
   });
 
+  const mainContext = {
+    route,
+    setRoute,
+    NFTARENA_READ,
+    NFTARENA_WRITE,
+  };
+
   useEffect(() => {
     console.log("chain:", chain?.name);
     console.log("chainName:", chainName);
     console.log(CONTRACTS[chainName as keyof typeof CONTRACTS]);
   }, [chainName]);
   return (
-    <MainContext.Provider value={{ NFTARENA_READ, NFTARENA_WRITE }}>
+    <MainContext.Provider value={mainContext}>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -50,7 +58,7 @@ export default function App() {
           alignItems="center"
           gap={5}
         >
-          <Mint />
+          {route === "game" ? <Game /> : <Mint />}
         </Box>
 
         <Box display={"flex"} justifyContent={"center"} alignItems="center" p={10}>

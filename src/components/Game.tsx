@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 
 export default function MintPlayer() {
-  const { NFTARENA_WRITE } = useContext(MainContext);
+  const { NFTARENA_WRITE, route, setRoute } = useContext(MainContext);
 
   return (
     <Box display="flex" flexDirection={"column"} gap={4}>
