@@ -45,14 +45,6 @@ export default function Bridge({}) {
         </Button>
       </Box>
 
-      {currentPlayer && (
-        <Box width={"50%"} height={"50%"} position={"absolute"}>
-          <Typography fontSize={24}>
-            {arenaStatus ? "arena is open" : "someone is in the arena"}Arena info
-          </Typography>
-        </Box>
-      )}
-
       <Box position={"absolute"} top="5%" left="35%">
         <Typography fontSize={24}>Get Ready to Bridge</Typography>
       </Box>

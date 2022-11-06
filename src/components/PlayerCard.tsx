@@ -33,10 +33,10 @@ export default function PlayerCard() {
             <Typography fontSize={14}>Address: {currentPlayer.address.substring(0, 6)}</Typography>
             <Typography fontSize={14}>
               Origin:{" "}
-              {currentPlayer.originDomain === 0
-                ? "Optimism"
-                : currentPlayer.originDomain === 1
+              {currentPlayer.originDomain === 80001
                 ? "Polygon"
+                : currentPlayer.originDomain === 420
+                ? "Optimism"
                 : "Ethereum"}
             </Typography>
             <Typography fontSize={14}>
