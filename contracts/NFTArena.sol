@@ -16,11 +16,16 @@ contract NFTArena is ERC1155, IMessageRecipient {
 
     uint32 constant goerliDomain = 5;
     address public goerliRecipient;
-    address activeOutbox;
+    address public activeOutbox;
 
-    IOutbox OUTBOX = IOutbox(activeOutbox);
+    IOutbox public OUTBOX;
 
-    function bridgePolygon(uint256 _tokenId) public returns (uint256) {
+    function bridgePolygon(uint256 _tokenId)
+        public
+        isIdle(_tokenId)
+        returns (uint256)
+    {
+        require(players[_tokenId].owner == msg.sender);
         Player memory playerRef = players[_tokenId];
         sent += 1;
         sentTo[mumbaiDomain] += 1;
@@ -42,7 +47,12 @@ contract NFTArena is ERC1155, IMessageRecipient {
         return sendId;
     }
 
-    function bridgeOptimism(uint256 _tokenId) public returns (uint256) {
+    function bridgeOptimism(uint256 _tokenId)
+        public
+        isIdle(_tokenId)
+        returns (uint256)
+    {
+        require(players[_tokenId].owner == msg.sender);
         Player memory playerRef = players[_tokenId];
         sent += 1;
         sentTo[optimismDomain] += 1;
@@ -64,7 +74,12 @@ contract NFTArena is ERC1155, IMessageRecipient {
         return sendId;
     }
 
-    function bridgeGoerli(uint256 _tokenId) public returns (uint256) {
+    function bridgeGoerli(uint256 _tokenId)
+        public
+        isIdle(_tokenId)
+        returns (uint256)
+    {
+        require(players[_tokenId].owner == msg.sender);
         Player memory playerRef = players[_tokenId];
         sent += 1;
         sentTo[goerliDomain] += 1;
@@ -98,7 +113,6 @@ contract NFTArena is ERC1155, IMessageRecipient {
         goerliRecipient = _recipient;
     }
 
-    bytes32 public aaTest = addressToBytes32(address(this));
     uint256 public constant PLAYER = 0;
     uint256 public constant GOLD = 1;
     uint256 public constant SILVER = 2;
@@ -174,6 +188,8 @@ contract NFTArena is ERC1155, IMessageRecipient {
         else if (localDomain == mumbaiDomain) activeOutbox = mumbaiOutbox;
         else if (localDomain == optimismDomain)
             activeOutbox = optimismGoerliOutbox;
+
+        OUTBOX = IOutbox(activeOutbox);
     }
 
     /////////////////////////HyperLane/////////////////////
@@ -247,10 +263,11 @@ contract NFTArena is ERC1155, IMessageRecipient {
         uint attackBonus = 0;
 
         if (localDomain == goerliDomain) hpBonus = 5;
-        else if (localDomain == mumbaiDomain) {
+        if (localDomain == mumbaiDomain) {
             hpBonus = 2;
             attackBonus = 1;
-        } else if (localDomain == optimismDomain) attackBonus = 2;
+        }
+        if (localDomain == optimismDomain) attackBonus = 2;
 
         players[localDomain + playerCount] = Player(
             localDomain + playerCount,
@@ -306,17 +323,14 @@ contract NFTArena is ERC1155, IMessageRecipient {
 
     function startQuest(uint256 _tokenId) external isIdle(_tokenId) {
         require(players[_tokenId].owner == msg.sender);
-        require(!quests[_tokenId].complete, "Quest complete.  Bridge!");
+        require(!quests[_tokenId].complete);
         players[_tokenId].status = Status.questing;
         quests[_tokenId].endTime = block.timestamp + 1;
     }
 
     function endQuest(uint256 _tokenId) external {
         require(players[_tokenId].owner == msg.sender);
-        require(
-            block.timestamp >= quests[_tokenId].endTime,
-            "It's not time to finish quest"
-        );
+        require(block.timestamp >= quests[_tokenId].endTime);
         require(players[_tokenId].status == Status.questing);
         setIdle(_tokenId);
         _mint(msg.sender, GOLD, 1, "");
@@ -326,7 +340,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
 
     function startTraining(uint256 _tokenId) external isIdle(_tokenId) {
         require(players[_tokenId].owner == msg.sender);
-        require(!trainings[_tokenId].complete, "Traning complete.  Bridge!");
+        require(!trainings[_tokenId].complete);
         players[_tokenId].status = Status.training;
         trainings[_tokenId].startTime = block.timestamp;
     }
@@ -394,7 +408,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
     }
 
     function craftSword(uint256 _tokenId) external isIdle(_tokenId) {
-        require(balanceOf(msg.sender, 1) >= 10, "you don't have enough gold");
+        require(balanceOf(msg.sender, 1) >= 10);
         safeTransferFrom(msg.sender, address(this), 1, 10, "0x0");
         _mint(msg.sender, SWORD, 3, "");
     }
