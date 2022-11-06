@@ -4,12 +4,18 @@ export const CONTRACTS = {
     //mumbai testnet chainid   
     "Polygon Mumbai": "0x9B42B4993faD01aDDE8E99B117D1F9A0e7eA0B8C", 
     //goerli testnet chainid
-    "Optimism Goerli": "0x342111e45B5b0F3993Be63d7E7C49151c6c433f1",
+    "Optimism Goerli": "0xC868F292eCCdD8e3280B3138fcd49CF3AD341f9C",
 }
 
 export const NFTARENA_ABI = [
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_localDomain",
+				"type": "uint256"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -372,38 +378,6 @@ export const NFTARENA_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getIds",
-		"outputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "ids",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -470,9 +444,19 @@ export const NFTARENA_ABI = [
 		"name": "players",
 		"outputs": [
 			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
 				"internalType": "address",
 				"name": "owner",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "originDomain",
+				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",

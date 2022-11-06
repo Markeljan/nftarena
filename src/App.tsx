@@ -42,18 +42,24 @@ export default function App() {
     address,
     NFTARENA_READ,
     NFTARENA_WRITE,
+    playersList,
   };
 
   //get array of Players
   useEffect(() => {
     async function fetchPlayers() {
       const playerCount = await NFTARENA_READ?.playerCount();
-      const players = [];
+      const players = [] as Player[];
       let player;
 
       for (let i = 1; i <= playerCount; i++) {
         player = await NFTARENA_READ?.players(i);
-        players.push(player);
+        player.map((index: any) => {
+          if (typeof index === "object") {
+            index = index.toNumber();
+          }
+          players.push(index);
+        });
       }
       setPlayersList(players);
     }
