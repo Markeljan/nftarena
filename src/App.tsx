@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
 import Game from "./components/Game";
 import Mint from "./components/Mint";
+import Train from "./components/Train";
 import Navbar from "./components/Navbar";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
 
 export default function App() {
   const [route, setRoute] = useState("game");
+  const [players, getPlayers] = useState([]);
   const { address } = useAccount();
   const { chain } = useNetwork();
   const provider = useProvider();
@@ -38,6 +40,12 @@ export default function App() {
   //get array of Players
   useEffect(() => {}, [NFTARENA_READ]);
 
+  async function getMyPlayers() {
+    let tempNFTArray = await NFTARENA_READ?.ids();
+    console.log(tempNFTArray);
+  }
+  getMyPlayers();
+
   return (
     <MainContext.Provider value={mainContext}>
       <Box
@@ -58,6 +66,7 @@ export default function App() {
         >
           <Game />
           <Mint />
+          <Train />
         </Box>
 
         <Box display={"flex"} justifyContent={"center"} alignItems="center" p={10}>
