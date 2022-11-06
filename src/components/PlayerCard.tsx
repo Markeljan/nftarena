@@ -4,8 +4,7 @@ import { MainContext } from "../contexts/MainContext";
 
 export default function PlayerCard() {
   const { currentPlayer, setCurrentPlayer, userPlayerList } = useContext(MainContext);
-
-  console.log("usersList", userPlayerList);
+  const currentPlayerIndex = userPlayerList.indexOf(currentPlayer);
 
   return (
     <Box
@@ -41,19 +40,24 @@ export default function PlayerCard() {
                 ? "Polygon"
                 : "Ethereum"}
             </Typography>
-            {/* left and right buttons to iterate through suersPlayers */}
+            <Typography fontSize={14}>
+              Status:{" "}
+              {currentPlayer.status === 0
+                ? "idle..."
+                : currentPlayer.status === 1
+                ? "questing..."
+                : "training..."}
+            </Typography>
 
             <Box display="flex" justifyContent="space-between" width="100%">
               <Typography
                 fontSize={14}
                 sx={{ cursor: "pointer" }}
                 onClick={() => {
-                  // if currentplayer index is the first player in the currentPlayerlist array, set current player to the last player in the list
-                  if (userPlayerList.findIndex(currentPlayer) === 0) {
+                  if (currentPlayerIndex === 0) {
                     setCurrentPlayer(userPlayerList[userPlayerList.length - 1]);
                   } else {
-                    // else set current player to the player before the current player
-                    setCurrentPlayer(userPlayerList[userPlayerList.findIndex(currentPlayer) - 1]);
+                    setCurrentPlayer(userPlayerList[currentPlayerIndex - 1]);
                   }
                 }}
               >
@@ -63,10 +67,10 @@ export default function PlayerCard() {
                 fontSize={14}
                 sx={{ cursor: "pointer" }}
                 onClick={() => {
-                  if (currentPlayer.tokenId === playersList.length) {
-                    setCurrentPlayer(playersList[0]);
+                  if (currentPlayerIndex === userPlayerList.length - 1) {
+                    setCurrentPlayer(userPlayerList[0]);
                   } else {
-                    setCurrentPlayer(playersList[currentPlayer.tokenId]);
+                    setCurrentPlayer(userPlayerList[currentPlayerIndex + 1]);
                   }
                 }}
               >
