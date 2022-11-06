@@ -34,14 +34,14 @@ export default function Quest({}) {
         </Button>
       </Box>
 
-      <Box position={"absolute"} top="5%" left="40%">
-        <Typography fontSize={24}>Time to Quest</Typography>
+      <Box position={"absolute"} top="35%" left="40%">
+        <Typography fontSize={24}>Quest Central</Typography>
       </Box>
 
       {currentPlayer && (
-        <Box width={"50%"} height={"50%"} position={"absolute"}>
+        <Box width={"50%"} height={"50%"} position={"absolute"} top="5%" left="5%">
           <Typography fontSize={24}>
-            {currentPlayer.status == 1 ? endTime : "not Questing"}quest info
+            {currentPlayer.status == 1 ? endTime : "Not Currently Questing"}
           </Typography>
         </Box>
       )}
