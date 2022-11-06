@@ -59,20 +59,25 @@ export default function App() {
   //get array of Players
   useEffect(() => {
     async function fetchPlayers() {
-      const playerCount = await NFTARENA_READ?.playerCount();
+      const playerCount = (await NFTARENA_READ?.playerCount()).toNumber();
       const players = [] as Player[];
       const userPlayers = [] as Player[];
       let player: any[];
-      for (let i = 1; i <= playerCount; i++) {
-        player = await NFTARENA_READ?.players(i);
-        console.log(player);
+      let existingIdsArray = [] as number[];
+
+      for (let i = 0; i < playerCount; i++) {
+        existingIdsArray.push((await NFTARENA_READ?.tokenIdsArray(i)).toNumber());
+      }
+
+      for (let i = 0; i < existingIdsArray.length; i++) {
+        player = await NFTARENA_READ?.players(existingIdsArray[i]);
         const playerObj = {
-          tokenId: player[0].toNumber(),
+          tokenId: player[0]?.toNumber(),
           uri: player[1],
           address: player[2],
-          originDomain: player[3].toNumber(),
-          hp: player[4].toNumber(),
-          attack: player[5].toNumber(),
+          originDomain: player[3]?.toNumber(),
+          hp: player[4]?.toNumber(),
+          attack: player[5]?.toNumber(),
           status: player[6],
         };
         players.push(playerObj);
