@@ -110,18 +110,37 @@ export default function App() {
       >
         <Navbar />
 
-        <Box
-          display={"flex"}
-          flexDirection="column"
-          justifyContent={"center"}
-          alignItems="center"
-          gap={5}
-        >
+        <Box display={"flex"} flexDirection="column" justifyContent={"center"} alignItems="center">
           <Game />
           <Mint />
         </Box>
 
-        <Box display={"flex"} justifyContent={"center"} alignItems="center" p={10}>
+        <Box display={"flex"} justifyContent={"center"} alignItems="center" gap={5}>
+          <Box
+            component="img"
+            sx={{
+              height: 40,
+              width: 40,
+            }}
+            src="/src/assets/optimism.png"
+          />
+          <Box
+            component="img"
+            sx={{
+              height: 40,
+              width: 40,
+            }}
+            src="/src/assets/polygon.png"
+          />
+
+          <Box
+            component="img"
+            sx={{
+              height: 40,
+              width: 40,
+            }}
+            src="/src/assets/hyperlane.png"
+          />
           <Typography>Built at ETH-Global SF 2022</Typography>
         </Box>
       </Box>

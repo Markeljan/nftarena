@@ -2,10 +2,12 @@ import { Box, Button, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNetwork } from "wagmi";
 
 export default function Bridge({}) {
   const { show, setShow, NFTARENA_WRITE, NFTARENA_READ, currentPlayer, address } =
     useContext(MainContext);
+  const { chain } = useNetwork();
 
   const [arenaStatus, setArenaStatus] = useState(true);
   const [gold, setGold] = useState(0);
@@ -50,13 +52,22 @@ export default function Bridge({}) {
       </Box>
 
       <Box display="flex" justifyContent="center" alignItems={"center"} height={"100%"}>
-        <Button onClick={() => NFTARENA_WRITE.bridgePolygon(currentPlayer.tokenId)}>
+        <Button
+          disabled={chain?.id === 80001}
+          onClick={() => NFTARENA_WRITE.bridgePolygon(currentPlayer.tokenId)}
+        >
           Voyage to Polygon
         </Button>
-        <Button onClick={() => NFTARENA_WRITE.bridgeOptimism(currentPlayer.tokenId)}>
+        <Button
+          disabled={chain?.id === 420}
+          onClick={() => NFTARENA_WRITE.bridgeOptimism(currentPlayer.tokenId)}
+        >
           Voyage to Optimism
         </Button>
-        <Button onClick={() => NFTARENA_WRITE.bridgeGoerli(currentPlayer.tokenId)}>
+        <Button
+          disabled={chain?.id === 5}
+          onClick={() => NFTARENA_WRITE.bridgeGoerli(currentPlayer.tokenId)}
+        >
           Voyage to Ethereum
         </Button>
       </Box>

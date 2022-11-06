@@ -61,17 +61,19 @@ export default function Game() {
 
       <Box
         position={"absolute"}
-        top="2%"
-        left="82%"
+        top="1%"
+        left="84%"
         alignItems="center"
         bgcolor="#e3f2fd"
         width={"15%"}
-        height={"5%"}
+        height={"8%"}
         justifyContent={"center"}
         display={"flex"}
         sx={{ borderRadius: "10%" }}
       >
-        <Typography fontSize={16}>You Have {gold} Gold 🪙 </Typography>
+        <Typography variant="h6" fontSize={18}>
+          {gold} Gold 🪙{" "}
+        </Typography>
       </Box>
 
       <Train />
