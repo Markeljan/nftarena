@@ -40,6 +40,14 @@ export default function PlayerCard() {
                 ? "Polygon"
                 : "Ethereum"}
             </Typography>
+            <Typography fontSize={14}>
+              Status:{" "}
+              {currentPlayer.status === 0
+                ? "idle..."
+                : currentPlayer.status === 1
+                ? "questing..."
+                : "training..."}
+            </Typography>
 
             <Box display="flex" justifyContent="space-between" width="100%">
               <Typography
