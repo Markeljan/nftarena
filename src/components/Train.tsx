@@ -70,8 +70,8 @@ export default function Train({}) {
         )}
 
         {currentPlayer && (
-            <Box width={"50%"} height={"50%"} position={"absolute"} top="80%" left="50%">
-                <Typography fontSize={24}>{Date.now() - startTime }</Typography>
+            <Box width={"50%"} height={"50%"} position={"absolute"} top="90%" left="70%">
+                <Typography fontSize={24}>{Date.now() - startTime} differnce</Typography>
             </Box>
         )}
 

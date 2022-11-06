@@ -5,6 +5,7 @@ import PlayerCard from "./PlayerCard";
 import Train from "./Train";
 import Quest from "./Quest";
 import Arena from "./Arena";
+import Bridge from "./Bridge";
 
 
 export default function Game() {
@@ -35,9 +36,14 @@ export default function Game() {
         <Button variant="contained" onClick={() => setShow("quest")}>Quest 💰</Button>
       </Box>
 
+      <Box position={"absolute"} top="52%" left="85%">
+        <Button variant="contained" onClick={() => setShow("bridge")}>Bridge </Button>
+      </Box>
+
       <Train/>
       <Quest/>
       <Arena/>
+      <Bridge/>
 
 
 
