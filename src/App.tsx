@@ -1,24 +1,38 @@
 import { Box, Typography } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ethers, providers } from "ethers";
 import { useEffect } from "react";
-import { useAccount, useNetwork } from "wagmi";
-import MintPlayer from "./components/MintPlayer";
-import { CONTRACTS } from "./constants/contracts";
+import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
+import Mint from "./components/Mint";
+import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
 
 export default function App() {
   const { address } = useAccount();
   const { chain } = useNetwork();
-  const chainId = chain?.id;
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+  const chainName = chain?.name;
+  const NFTARENA_ADDRESS = CONTRACTS[chainName as keyof typeof CONTRACTS];
+
+  const NFTARENA_READ = useContract({
+    address: NFTARENA_ADDRESS,
+    abi: NFTARENA_ABI,
+    signerOrProvider: provider,
+  });
+  const NFTARENA_WRITE = useContract({
+    address: NFTARENA_ADDRESS,
+    abi: NFTARENA_ABI,
+    signerOrProvider: signer,
+  });
 
   useEffect(() => {
-    console.log("address", address);
-    console.log("chain", chain?.name);
-    // console.log(CONTRACTS[chain?.name]);
-    // console.log(CONTRACTS[chain?.id as keyof typeof CONTRACTS]);
-  }, []);
+    console.log("chain:", chain?.name);
+    console.log("chainName:", chainName);
+    console.log(CONTRACTS[chainName as keyof typeof CONTRACTS]);
+  }, [chainName]);
   return (
-    <MainContext.Provider value={CONTRACTS}>
+    <MainContext.Provider value={{ NFTARENA_READ, NFTARENA_WRITE }}>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -36,7 +50,7 @@ export default function App() {
           alignItems="center"
           gap={5}
         >
-          <MintPlayer />
+          <Mint />
         </Box>
 
         <Box display={"flex"} justifyContent={"center"} alignItems="center" p={10}>

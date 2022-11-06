@@ -8,7 +8,9 @@ export default function MintPlayer() {
   return (
     <Box display="flex" flexDirection={"column"} gap={4}>
       <Typography> Mint Player </Typography>
-      <Button variant="contained">Mint</Button>
+      <Button onClick={() => NFTARENA_WRITE._mintPlayer()} variant="contained">
+        Mint
+      </Button>
     </Box>
   );
 }
