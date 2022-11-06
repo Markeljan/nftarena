@@ -28,7 +28,6 @@ export default function PlayerCard() {
             <Box display="flex" gap={1}>
               <Typography fontSize={14}>❤️ {currentPlayer.hp}</Typography>
               <Typography fontSize={14}>🗡️ {currentPlayer.attack}</Typography>
-              <Typography fontSize={14}>🛡️ {currentPlayer.status}</Typography>
             </Box>
             <Typography fontSize={14}>Nomad {currentPlayer.tokenId}</Typography>
             <Typography fontSize={14}>Address: {currentPlayer.address.substring(0, 6)}</Typography>

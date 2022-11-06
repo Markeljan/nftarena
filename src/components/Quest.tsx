@@ -1,20 +1,30 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Quest({}) {
 
-
     const {
-        route,
-        setRoute,
         show,
-        setShow
+        setShow,
+        NFTARENA_WRITE,
+        NFTARENA_READ,
+        currentPlayer,
       } = useContext(MainContext);
 
+      const [endTime, getEndTime] = useState(0);
 
-
+    useEffect(() => {      
+        async function fetchQuest() {
+            const time = (await NFTARENA_READ?.quests(currentPlayer.tokenId)).toNumber();
+            getEndTime(time);
+            
+        }
+        if (NFTARENA_READ && currentPlayer) {
+            fetchQuest();
+        }
+    }, [NFTARENA_READ, currentPlayer]);
 
     return (
         <Box
@@ -36,6 +46,23 @@ export default function Quest({}) {
         <Box position={"absolute"} top="5%" left="40%">
           <Typography fontSize={24}>Time to Quest</Typography>
         </Box>
+
+        {currentPlayer && (
+            <Box width={"50%"} height={"50%"} position={"absolute"}>
+                <Typography fontSize={24}>{currentPlayer.status == 1 ?  endTime : "not Questing"}quest info</Typography>
+            </Box>
+        )}
+
+        <Box position={"absolute"} top="80%" left="20%">
+            <Button onClick={() => NFTARENA_WRITE.startQuest(currentPlayer.tokenId)}>
+                Begin Questing
+            </Button>
+        </Box>
+        <Box position={"absolute"}top="80%" left="60%">
+            <Button onClick={() => NFTARENA_WRITE.endQuest(currentPlayer.tokenId)}>
+                Finish Questing
+            </Button>
+        </Box>        
 
       </Box>
     );

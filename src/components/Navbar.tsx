@@ -13,7 +13,7 @@ export default function Header() {
       alignItems="center"
       width="100%"
       bgcolor={"white"}
-      p={3}
+      pb={3}
     >
       <Box display={"flex"} minWidth={{ xs: "40%" }}>
         <Button onClick={() => setRoute("mint")} size="large">

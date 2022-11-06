@@ -8,15 +8,8 @@ import Arena from "./Arena";
 
 
 export default function Game() {
-  const { route, setRoute } = useContext(MainContext);
-  const [show, setShow] = useState("");
+  const { route, setRoute, show, setShow } = useContext(MainContext);
 
-  const showContext ={
-    show,
-    setShow
-  }
-
-  
   return (
     <Box
       display={route === "game" ? "flex" : "none"}
@@ -42,11 +35,10 @@ export default function Game() {
         <Button variant="contained" onClick={() => setShow("quest")}>Quest 💰</Button>
       </Box>
 
-      <MainContext.Provider value={showContext}>
-        <Train/>
-        <Quest/>
-        <Arena/>
-      </MainContext.Provider>
+      <Train/>
+      <Quest/>
+      <Arena/>
+
 
 
 

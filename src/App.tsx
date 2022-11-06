@@ -27,6 +27,8 @@ export default function App() {
   const { chain } = useNetwork();
   const provider = useProvider();
   const { data: signer } = useSigner();
+  const [show, setShow] = useState("");
+
   const chainName = chain?.name;
   const NFTARENA_ADDRESS = CONTRACTS[chainName as keyof typeof CONTRACTS];
 
@@ -50,6 +52,8 @@ export default function App() {
     currentPlayer,
     setCurrentPlayer,
     userPlayerList,
+    show,
+    setShow
   };
 
   //get array of Players
@@ -101,7 +105,6 @@ export default function App() {
         display={"flex"}
         flexDirection={"column"}
         justifyContent={"space-between"}
-        p={2}
         minHeight={"100vh"}
       >
         <Navbar />
@@ -115,11 +118,10 @@ export default function App() {
         >
           <Game />
           <Mint />
-          <Train />
         </Box>
 
         <Box display={"flex"} justifyContent={"center"} alignItems="center" p={10}>
-          <Typography>Built at ETH SF 2022</Typography>
+          <Typography>Built at ETH-Global SF 2022</Typography>
         </Box>
       </Box>
     </MainContext.Provider>
