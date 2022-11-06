@@ -9,7 +9,9 @@ import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
 
 interface Player {
+  tokenId: number;
   address: string;
+  originDomain: number;
   hp: number;
   attack: number;
   status: number;
@@ -18,6 +20,8 @@ interface Player {
 export default function App() {
   const [route, setRoute] = useState("game");
   const [playersList, setPlayersList] = useState<Player[]>([]);
+  const [userPlayerList, setUserPlayerList] = useState<Player[]>([]);
+  const [currentPlayer, setCurrentPlayer] = useState<Player>();
   const { address } = useAccount();
   const { chain } = useNetwork();
   const provider = useProvider();
@@ -42,7 +46,8 @@ export default function App() {
     address,
     NFTARENA_READ,
     NFTARENA_WRITE,
-    playersList,
+    currentPlayer,
+    setCurrentPlayer,
   };
 
   //get array of Players
@@ -50,18 +55,26 @@ export default function App() {
     async function fetchPlayers() {
       const playerCount = await NFTARENA_READ?.playerCount();
       const players = [] as Player[];
-      let player;
+      const userPlayers = [] as Player[];
+      let player: any[];
 
       for (let i = 1; i <= playerCount; i++) {
         player = await NFTARENA_READ?.players(i);
-        player.map((index: any) => {
-          if (typeof index === "object") {
-            index = index.toNumber();
-          }
-          players.push(index);
-        });
+
+        const playerObj = {
+          tokenId: player[0].toNumber(),
+          address: player[1],
+          originDomain: player[2].toNumber(),
+          hp: player[3].toNumber(),
+          attack: player[4].toNumber(),
+          status: player[5],
+        };
+
+        players.push(playerObj);
       }
       setPlayersList(players);
+      setUserPlayerList(userPlayers);
+      setCurrentPlayer(userPlayers[0]);
     }
 
     if (NFTARENA_READ) {
