@@ -13,6 +13,8 @@ contract NFTArena is ERC1155 {
 
     string private baseURI;
     uint256 public playerCount;
+    bool public arenaOpen;
+    Arena public arena = Arena(true, 0, payable(msg.sender));
 
     //mapping(address => uint) public profiles;
     mapping(uint => Player) public players;
@@ -37,6 +39,12 @@ contract NFTArena is ERC1155 {
 
     struct Train {
         uint256 startTime;
+    }
+
+    struct Arena {
+        bool open;
+        uint256 hostId;
+        address payable hostAddress;
     }
 
     constructor()
@@ -68,18 +76,6 @@ contract NFTArena is ERC1155 {
         );
         return s;
     }
-
-    // function getMyPlayers() external view returns (uint256[] memory _ids) {
-    //     _ids = new uint256[](balanceOf(msg.sender));
-    //     uint256 currentIndex;
-    //     //uint256 _tokenCount = tokenCount;
-    //     for (uint256 i = 0; i < playerCount; i++) {
-    //         if (ownerOf(i + 1) == msg.sender) {
-    //             _ids[currentIndex] = i + 1;
-    //             currentIndex++;
-    //         }
-    //     }
-    // }
 
     function setIdle(uint256 _tokenId) internal {
         players[_tokenId].status = Status.idle;
@@ -115,5 +111,51 @@ contract NFTArena is ERC1155 {
         players[_tokenId].attack++; //we can make this logic more complex later
     }
 
-    function openFight(uint256 _tokenId) external isIdle(_tokenId) {}
+    function enterArena(uint256 _tokenId) external isIdle(_tokenId) {
+        require(arena.open, "arena is closed");
+        require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
+        safeTransferFrom(msg.sender, address(this), 1, 1, "0x0");
+        arena.open = false;
+    }
+
+    function fightArena(uint256 _tokenId) external isIdle(_tokenId) {
+        require(!arena.open, "arena is empty");
+        require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
+        uint256 winner = simulateFight(arena.hostId, _tokenId);
+        if (winner == _tokenId) {
+            safeTransferFrom(address(this), msg.sender,  1, 1, "0x0");
+        } else {
+            safeTransferFrom(address(this), arena.hostAddress,  1, 1, "0x0");
+            safeTransferFrom(msg.sender, arena.hostAddress,  1, 1, "0x0");
+        }
+        arena.open = false;
+    }
+
+    function simulateFight(uint256 _hostId, uint256 _challengerId) internal view returns(uint256) {
+        Player storage host = players[_hostId];
+        Player storage challenger = players[_challengerId];
+        uint hostHp = host.hp;
+        uint challengerHp = challenger.hp;
+        while(hostHp > 0 && challengerHp > 0) {
+            challengerHp - host.attack * (random() % 2);
+            if (challengerHp <= 0) {
+                break;
+            }
+            hostHp - challenger.attack * (random() % 2);
+        }
+        return _challengerId; 
+    }
+
+    function random() internal view returns(uint256) {
+        return uint256(keccak256(abi.encodePacked(block.timestamp + block.difficulty + playerCount)));
+    }
+
+    function craftSword(uint256 _tokenId) external isIdle(_tokenId) {
+        require(balanceOf(msg.sender, 1) >= 10, "you don't have enough gold");
+        safeTransferFrom(msg.sender, address(this), 1, 10, "0x0");
+        _mint(msg.sender, SWORD, 3, "");
+    }
+
+
 }
+
