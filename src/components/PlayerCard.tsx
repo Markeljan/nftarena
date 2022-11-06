@@ -13,7 +13,7 @@ export default function PlayerCard() {
       alignItems="center"
       bgcolor="#e3f2fd"
       p={3}
-      sx={{ border: 1, borderRadius: "10%" }}
+      sx={{ borderRadius: "10%" }}
     >
       <Box sx={{ opacity: 1 }} display="flex" flexDirection="column" gap={3}>
         <Box
