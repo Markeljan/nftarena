@@ -45,7 +45,7 @@ export default function Arena({}) {
             height={"80%"}
             bgcolor="#e3f2fd"
             position={"absolute"}
-            top="8%"
+            top="10%"
             left="19%"
             sx={{ borderRadius: "5%" }}
         >
@@ -56,8 +56,8 @@ export default function Arena({}) {
         </Box>  
 
         {currentPlayer && (
-            <Box width={"50%"} height={"50%"} position={"absolute"}>
-                <Typography fontSize={24}>{arenaStatus ? "arena is open" : "someone is in the arena"}Arena info</Typography>
+            <Box width={"50%"} height={"50%"} position={"absolute"} top="5%" left="5%">
+                <Typography fontSize={24}>{arenaStatus ? "The Arena Is Open" : "Someone Is In The Arena"}</Typography>
             </Box>
         )} 
 
@@ -73,15 +73,19 @@ export default function Arena({}) {
             </Button>
         </Box>
 
+        <Box component="img" src="/src/assets/arena.jpeg" 
+            width={"60%"} height={"45%"} position={"absolute"} top="20%" left="22%">
+        </Box>
 
 
-        <Box position={"absolute"} top="5%" left="40%">
+
+        {/* <Box position={"absolute"} top="5%" left="40%">
             <Typography fontSize={24}>Welcome to the Arena</Typography>
         </Box>
 
         <Box position={"absolute"} top="15%" left="40%">
             <Typography fontSize={24}>You have {gold} Gold</Typography>
-        </Box>
+        </Box> */}
 
 
 

@@ -37,7 +37,7 @@ export default function Train({}) {
         height={"80%"}
         bgcolor="#e3f2fd"
         position={"absolute"}
-        top="8%"
+        top="10%"
         left="19%"
         sx={{ borderRadius: "5%" }}
       >
