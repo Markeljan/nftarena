@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
 import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
 import Game from "./components/Game";
@@ -31,6 +30,7 @@ export default function App() {
   const mainContext = {
     route,
     setRoute,
+    address,
     NFTARENA_READ,
     NFTARENA_WRITE,
   };

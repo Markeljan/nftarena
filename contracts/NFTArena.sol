@@ -123,31 +123,42 @@ contract NFTArena is ERC1155 {
         require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
         uint256 winner = simulateFight(arena.hostId, _tokenId);
         if (winner == _tokenId) {
-            safeTransferFrom(address(this), msg.sender,  1, 1, "0x0");
+            safeTransferFrom(address(this), msg.sender, 1, 1, "0x0");
         } else {
-            safeTransferFrom(address(this), arena.hostAddress,  1, 1, "0x0");
-            safeTransferFrom(msg.sender, arena.hostAddress,  1, 1, "0x0");
+            safeTransferFrom(address(this), arena.hostAddress, 1, 1, "0x0");
+            safeTransferFrom(msg.sender, arena.hostAddress, 1, 1, "0x0");
         }
         arena.open = false;
     }
 
-    function simulateFight(uint256 _hostId, uint256 _challengerId) internal view returns(uint256) {
+    function simulateFight(uint256 _hostId, uint256 _challengerId)
+        internal
+        view
+        returns (uint256)
+    {
         Player storage host = players[_hostId];
         Player storage challenger = players[_challengerId];
         uint hostHp = host.hp;
         uint challengerHp = challenger.hp;
-        while(hostHp > 0 && challengerHp > 0) {
+        while (hostHp > 0 && challengerHp > 0) {
             challengerHp - host.attack * (random() % 2);
             if (challengerHp <= 0) {
                 break;
             }
             hostHp - challenger.attack * (random() % 2);
         }
-        return _challengerId; 
+        return _challengerId;
     }
 
-    function random() internal view returns(uint256) {
-        return uint256(keccak256(abi.encodePacked(block.timestamp + block.difficulty + playerCount)));
+    function random() internal view returns (uint256) {
+        return
+            uint256(
+                keccak256(
+                    abi.encodePacked(
+                        block.timestamp + block.difficulty + playerCount
+                    )
+                )
+            );
     }
 
     function craftSword(uint256 _tokenId) external isIdle(_tokenId) {
@@ -155,7 +166,4 @@ contract NFTArena is ERC1155 {
         safeTransferFrom(msg.sender, address(this), 1, 10, "0x0");
         _mint(msg.sender, SWORD, 3, "");
     }
-
-
 }
-

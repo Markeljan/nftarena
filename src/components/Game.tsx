@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 
-export default function GameMap() {
+export default function Game() {
   const {
     setShowTavern,
     showTavern,
