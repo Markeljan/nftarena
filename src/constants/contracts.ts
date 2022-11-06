@@ -4,7 +4,7 @@ export const CONTRACTS = {
     //mumbai testnet chainid   
     "Polygon Mumbai": "0x9B42B4993faD01aDDE8E99B117D1F9A0e7eA0B8C", 
     //goerli testnet chainid
-    "Optimism Goerli": "0xC868F292eCCdD8e3280B3138fcd49CF3AD341f9C",
+    "Optimism Goerli": "0x61467646BAAB829a7C65a2206EE5535F495669C7",
 }
 
 export const NFTARENA_ABI = [
@@ -447,6 +447,11 @@ export const NFTARENA_ABI = [
 				"internalType": "uint256",
 				"name": "tokenId",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "uri",
+				"type": "string"
 			},
 			{
 				"internalType": "address",

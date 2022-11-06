@@ -3,7 +3,9 @@ import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 
 export default function PlayerCard() {
-  const { playersList, currentPlayer, setCurrentPlayer } = useContext(MainContext);
+  const { currentPlayer, setCurrentPlayer, userPlayerList } = useContext(MainContext);
+
+  console.log("usersList", userPlayerList);
 
   return (
     <Box
@@ -19,17 +21,60 @@ export default function PlayerCard() {
         <Box
           component="img"
           sx={{ opacity: 1, height: 120, width: 120 }}
-          alt="The house from the offer."
-          src="/src/assets/nft-preview.gif"
+          alt="NFT image."
+          src={currentPlayer && currentPlayer.uri}
         />
-        <Box sx={{ opacity: 1 }} display="flex" flexDirection="column" gap={2}>
-          <Typography>Player Name</Typography>
-          <Typography>Player Level</Typography>
-        </Box>
-      </Box>
-      <Box display="flex" flexDirection="column" gap={2}>
-        <Typography>Player Wins</Typography>
-        <Typography>Player Losses</Typography>
+        {currentPlayer && (
+          <Box sx={{ opacity: 1 }} display="flex" flexDirection="column">
+            <Box display="flex" gap={1}>
+              <Typography fontSize={14}>❤️ {currentPlayer.hp}</Typography>
+              <Typography fontSize={14}>🗡️ {currentPlayer.attack}</Typography>
+              <Typography fontSize={14}>🛡️ {currentPlayer.status}</Typography>
+            </Box>
+            <Typography fontSize={14}>Nomad {currentPlayer.tokenId}</Typography>
+            <Typography fontSize={14}>Address: {currentPlayer.address.substring(0, 6)}</Typography>
+            <Typography fontSize={14}>
+              Origin:{" "}
+              {currentPlayer.originDomain === 0
+                ? "Optimism"
+                : currentPlayer.originDomain === 1
+                ? "Polygon"
+                : "Ethereum"}
+            </Typography>
+            {/* left and right buttons to iterate through suersPlayers */}
+
+            <Box display="flex" justifyContent="space-between" width="100%">
+              <Typography
+                fontSize={14}
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  // if currentplayer index is the first player in the currentPlayerlist array, set current player to the last player in the list
+                  if (userPlayerList.findIndex(currentPlayer) === 0) {
+                    setCurrentPlayer(userPlayerList[userPlayerList.length - 1]);
+                  } else {
+                    // else set current player to the player before the current player
+                    setCurrentPlayer(userPlayerList[userPlayerList.findIndex(currentPlayer) - 1]);
+                  }
+                }}
+              >
+                {"<"}
+              </Typography>
+              <Typography
+                fontSize={14}
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  if (currentPlayer.tokenId === playersList.length) {
+                    setCurrentPlayer(playersList[0]);
+                  } else {
+                    setCurrentPlayer(playersList[currentPlayer.tokenId]);
+                  }
+                }}
+              >
+                {">"}
+              </Typography>
+            </Box>
+          </Box>
+        )}
       </Box>
     </Box>
   );

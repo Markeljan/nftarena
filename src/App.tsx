@@ -10,6 +10,7 @@ import { MainContext } from "./contexts/MainContext";
 
 interface Player {
   tokenId: number;
+  uri: string;
   address: string;
   originDomain: number;
   hp: number;
@@ -48,6 +49,7 @@ export default function App() {
     NFTARENA_WRITE,
     currentPlayer,
     setCurrentPlayer,
+    userPlayerList,
   };
 
   //get array of Players
@@ -63,15 +65,22 @@ export default function App() {
 
         const playerObj = {
           tokenId: player[0].toNumber(),
-          address: player[1],
-          originDomain: player[2].toNumber(),
-          hp: player[3].toNumber(),
-          attack: player[4].toNumber(),
-          status: player[5],
+          uri: player[1],
+          address: player[2],
+          originDomain: player[3].toNumber(),
+          hp: player[4].toNumber(),
+          attack: player[5].toNumber(),
+          status: player[6],
         };
 
         players.push(playerObj);
       }
+      players.map((player) => {
+        if (player.address === address) {
+          userPlayers.push(player);
+        }
+      });
+
       setPlayersList(players);
       setUserPlayerList(userPlayers);
       setCurrentPlayer(userPlayers[0]);
@@ -83,7 +92,7 @@ export default function App() {
   }, [NFTARENA_READ]);
 
   useEffect(() => {
-    console.log("playersList", playersList);
+    console.log("userPlayers", userPlayerList);
   }, [playersList]);
 
   return (
