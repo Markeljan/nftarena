@@ -6,6 +6,7 @@ export default function PlayerCard() {
   const { currentPlayer, setCurrentPlayer, userPlayerList } = useContext(MainContext);
   const currentPlayerIndex = userPlayerList.indexOf(currentPlayer);
 
+
   return (
     <Box
       display="flex"
