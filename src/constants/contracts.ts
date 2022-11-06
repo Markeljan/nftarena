@@ -4,7 +4,7 @@ export const CONTRACTS = {
     //mumbai testnet chainid   
     "Polygon Mumbai": "0xBE3D68FB7ABE6f1BAF9e6516eb811173CF0043D9", 
     //goerli testnet chainid
-    "Optimism Goerli": "0x29859738DA0De203B5141F0eB7DB43D059EeEbdB",
+    "Optimism Goerli": "0x3E465c0C84c946ca2F4c3Cb7E14D308C4Ed2BB43",
 }
 
 export const NFTARENA_ABI = [

@@ -343,6 +343,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
         require(balanceOf(msg.sender, 1) >= 1, "not enough gold");
         if (arena.open == false) {
             fightArena(_tokenId);
+            return;
         }
         safeTransferFrom(msg.sender, address(this), 1, 1, "0x0");
         arena.open = false;
