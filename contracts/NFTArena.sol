@@ -140,7 +140,7 @@ contract NFTArena is ERC1155 {
             _safeTransferFrom(address(this), arena.hostAddress,  1, 1, "0x0");
             _safeTransferFrom(msg.sender, arena.hostAddress,  1, 1, "0x0");
         }
-        arena.open = false;
+        arena.open = true;
     }
 
     function simulateFight(uint256 _hostId, uint256 _challengerId) internal view returns(uint256) {

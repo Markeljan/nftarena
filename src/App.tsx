@@ -63,10 +63,8 @@ export default function App() {
       const players = [] as Player[];
       const userPlayers = [] as Player[];
       let player: any[];
-
       for (let i = 1; i <= playerCount; i++) {
         player = await NFTARENA_READ?.players(i);
-
         const playerObj = {
           tokenId: player[0].toNumber(),
           uri: player[1],
@@ -76,7 +74,6 @@ export default function App() {
           attack: player[5].toNumber(),
           status: player[6],
         };
-
         players.push(playerObj);
       }
       players.map((player) => {
