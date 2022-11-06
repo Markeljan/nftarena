@@ -56,7 +56,7 @@ export default function Bridge({}) {
         <Button onClick={() => NFTARENA_WRITE.bridgeOptimism(currentPlayer.tokenId)}>
           Voyage to Optimism
         </Button>
-        <Button onClick={() => NFTARENA_WRITE.bridgeEthereum(currentPlayer.tokenId)}>
+        <Button onClick={() => NFTARENA_WRITE.bridgeGoerli(currentPlayer.tokenId)}>
           Voyage to Ethereum
         </Button>
       </Box>

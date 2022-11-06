@@ -1,6 +1,6 @@
 export const CONTRACTS = {
     //optimism goerli testnet chainid 
-    "Goerli": "0x843E499E54d8D0c2274dA668Faa748D8206846f8",
+    "Goerli": "0xb2847e8877992fbE596e23590052eB760a321cd8",
     //mumbai testnet chainid   
     "Polygon Mumbai": "0xB947E5387Ad88d774Be69A860209e5bB2d2Bf937", 
     //goerli testnet chainid
