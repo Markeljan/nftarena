@@ -13,7 +13,6 @@ export default function Bridge({}) {
   useEffect(() => {
     async function fetchArena() {
       const status = await NFTARENA_READ?.arena();
-      console.log(status[0]);
       setArenaStatus(status[0]);
     }
 

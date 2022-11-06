@@ -17,7 +17,6 @@ export default function Quest({}) {
       fetchQuest();
     }
   }, [NFTARENA_READ, currentPlayer]);
-
   return (
     <Box
       display={show === "quest" ? "flex" : "none"}
@@ -25,7 +24,7 @@ export default function Quest({}) {
       height={"80%"}
       bgcolor="#e3f2fd"
       position={"absolute"}
-      top="8%"
+      top="10%"
       left="19%"
       sx={{ borderRadius: "5%" }}
     >
