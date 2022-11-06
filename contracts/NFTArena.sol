@@ -1,12 +1,48 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import {Router} from "@hyperlane-xyz/app/contracts/Router.sol";
+import {IMessageRecipient} from "@hyperlane-xyz/core/interfaces/IMessageRecipient.sol";
+import {IOutbox} from "@hyperlane-xyz/core/interfaces/IOutbox.sol";
 
-contract NFTArena is ERC1155 {
+contract NFTArena is ERC1155, IMessageRecipient {
+    uint32 constant mumbaiDomain = 80001;
+    address public mumbaiRecipient = 0x54148470292C24345fb828B003461a9444414517;
+    address constant optimismGoerliOutbox =
+        0x54148470292C24345fb828B003461a9444414517;
+    // 0x54148470292C24345fb828B003461a9444414517
+
+    IOutbox OUTBOX = IOutbox(optimismGoerliOutbox);
+
+    function aaTestDispatch() public returns (uint256) {
+        uint256 testDispatch = OUTBOX.dispatch(
+            mumbaiDomain,
+            addressToBytes32(mumbaiRecipient),
+            bytes("hello from ETHSF")
+        );
+        return testDispatch;
+    }
+
+    function sendMessageBridgeNFT(uint256 _tokenId) public returns (uint256) {
+        Player memory playerRef = players[_tokenId];
+        sent += 1;
+        sentTo[mumbaiDomain] += 1;
+        uint256 sendId = OUTBOX.dispatch(
+            mumbaiDomain,
+            addressToBytes32(mumbaiRecipient),
+            abi.encode(playerRef)
+        );
+        emit SentMessageBridgeNFT(localDomain, msg.sender, _tokenId, playerRef);
+        return (sendId);
+    }
+
+    function aaChangeRecipient(address _recipient) public {
+        mumbaiRecipient = _recipient;
+    }
+
+    bytes32 public aaTest = addressToBytes32(address(this));
     uint256 public constant PLAYER = 0;
     uint256 public constant GOLD = 1;
     uint256 public constant SILVER = 2;
@@ -38,6 +74,7 @@ contract NFTArena is ERC1155 {
     }
     struct Player {
         uint256 tokenId;
+        string uri;
         address owner;
         uint256 originDomain;
         uint256 hp;
@@ -59,85 +96,68 @@ contract NFTArena is ERC1155 {
         address payable hostAddress;
     }
 
-    uint256 localDomain;
+    uint32 public localDomain;
 
-    constructor(uint256 _localDomain)
+    constructor()
         ERC1155(
             "https://bafybeihfvy2hmcnvpax6anx3tgx53qie4nj32eqtuehsu2g5c5hx3ukxc4.ipfs.nftstorage.link/"
         )
     {
         baseURI = "https://bafybeihfvy2hmcnvpax6anx3tgx53qie4nj32eqtuehsu2g5c5hx3ukxc4.ipfs.nftstorage.link/";
 
-        // destinationDomain = _destinationDomain;
-        localDomain = _localDomain;
+        localDomain = uint32(block.chainid);
     }
 
-    // //mumbai => opkovan
-    // if (_destinationDomain == 0x6f702d6b) {
-    //     _setAbacusConnectionManager(
-    //         0xb636B2c65A75d41F0dBe98fB33eb563d245a241a
-    //     );
-    //     _setInterchainGasPaymaster(
-    //         0x9A27744C249A11f68B3B56f09D280599585DFBb8
-    //     );
-    // }
-    // //opkovan => mumbai
-    // if (_destinationDomain == 80001) {
-    //     _setAbacusConnectionManager(
-    //         0x740bEd6E4eEc7c57a2818177Fba3f9E896D5DE1c
-    //     );
-    //     _setInterchainGasPaymaster(
-    //         0xD7D2B0f61B834D98772e938Fa64425587C0f3481
-    //     );
-
-    // }
-    // }
     /////////////////////////HyperLane/////////////////////
     //////////////////////CrossChain Messaging///////////////////
     ///////////////////////////////////////////////////////////
+    event SentMessageBridgeNFT(
+        uint32 indexed origin,
+        address indexed owner,
+        uint256 indexed _tokenId,
+        Player playerRef
+    );
 
-    // uint32 private destinationDomain;
-    // uint256 public sent;
-    // uint256 public received;
-    // mapping(uint32 => uint256) public sentTo;
-    // mapping(uint32 => uint256) public receivedFrom;
+    event ReceivedMessageBridgeNFT(
+        uint32 indexed origin,
+        address owner,
+        uint256 indexed _tokenId,
+        bytes indexed message
+    );
 
-    // event SentMessageBridgeNFT(
-    //     uint32 indexed origin,
-    //     address indexed owner,
-    //     uint256 indexed _tokenId
-    // );
+    uint256 public sent;
+    uint256 public received;
+    mapping(uint32 => uint256) public sentTo;
+    mapping(uint32 => uint256) public receivedFrom;
 
-    // event ReceivedMessageBridgeNFT(
-    //     uint32 indexed origin,
-    //     address indexed owner,
-    //     uint256 indexed _tokenId
-    // );
-    //  //bridgeNFT
-    // function sendMessageBridgeNFT (uint256 _tokenId) internal {
-    //     Player memory playerRef = players[_tokenId];
-    //     sent +=1;
-    //     sentTo[destinationDomain] += 1;
-    //     _dispatchWithGas(
-    //         destinationDomain,
-    //         abi.encode(
-    //             playerRef
-    //         ),
-    //         msg.value
-    //     );
-    //     emit SentMessageBridgeNFT(_localDomain(), msg.sender, _tokenId);
-    // }
+    function handle(
+        uint32 _origin,
+        bytes32 _sender,
+        bytes memory _messageBody
+    ) public {
+        received += 1;
+        receivedFrom[_origin] += 1;
+        playerCount += 999;
+        emit ReceivedMessageBridgeNFT(
+            _origin,
+            address(this),
+            9999,
+            _messageBody
+        );
 
-    // function _handle(
+        //_reMintPlayer(playerRef);
+    }
+
+    // function handle(
     //     uint32 _origin,
     //     bytes32 _sender,
-    //     bytes memory _message
-    // ) internal override {
+    //     bytes memory _messageBody
+    // ) public {
     //     received += 1;
     //     receivedFrom[_origin] += 1;
 
     //     (Player memory playerRef) = abi.decode(
-    //             _message,
+    //             _messageBody,
     //             (Player)
     //         );
 
@@ -149,6 +169,37 @@ contract NFTArena is ERC1155 {
     //         _reMintPlayer(playerRef);
     // }
 
+    //     IOutbox(ethereumOutbox).dispatch(
+    //     avalancheDomain,
+    //     addressToBytes32(avalancheRecipient),
+    //     bytes("hello avalanche from ethereum")
+    // );
+
+    // function dispatch(
+    //         uint32,
+    //         bytes32 _recipientAddress,
+    //         bytes calldata _messageBody
+    //     ) external returns (uint256) {
+    //         inbox.addPendingMessage(
+    //             domain,
+    //             msg.sender.addressToBytes32(),
+    //             _recipientAddress,
+    //             _messageBody
+    //         );
+
+    // function sendMessageBridgeNFT (uint256 _tokenId) internal {
+    //     Player memory playerRef = players[_tokenId];
+    //     sent +=1;
+    //     sentTo[destinationDomain] += 1;
+    //     dispatch(
+    //         destinationDomain,
+
+    //         abi.encode(
+    //             playerRef
+    //         )
+    //     );
+    //     emit SentMessageBridgeNFT(_localDomain(), msg.sender, _tokenId);
+    // }
     modifier isIdle(uint256 _tokenId) {
         require(players[_tokenId].status == Status.idle, "not ready");
         _;
@@ -160,6 +211,7 @@ contract NFTArena is ERC1155 {
 
         players[playerCount] = Player(
             playerCount,
+            uri(playerCount),
             msg.sender,
             localDomain,
             10,
@@ -170,12 +222,22 @@ contract NFTArena is ERC1155 {
         trainings[playerCount] = Train(0);
     }
 
-    // function _reMintPlayer(Player memory _playerRef) internal {
-    //     _mint(msg.sender, PLAYER , 1, "");
+    function _reMintPlayer(Player memory _playerRef) public {
+        playerCount++;
+        _mint(msg.sender, PLAYER, 1, "");
 
-    //     players[_playerRef.originDomain + _playerRef.tokenId] = Player(_playerRef.tokenId, _playerRef.owner, _playerRef.originDomain, _playerRef.hp, _playerRef.attack, _playerRef.status);
-
-    // }
+        players[_playerRef.originDomain + _playerRef.tokenId] = Player(
+            _playerRef.tokenId,
+            _playerRef.uri,
+            _playerRef.owner,
+            _playerRef.originDomain,
+            _playerRef.hp,
+            _playerRef.attack,
+            _playerRef.status
+        );
+        quests[_playerRef.originDomain + _playerRef.tokenId] = Quest(0);
+        trainings[_playerRef.originDomain + _playerRef.tokenId] = Train(0);
+    }
 
     function uri(uint256 _id) public view override returns (string memory) {
         //require(_exists(id), "Nonexistant token");
@@ -273,5 +335,10 @@ contract NFTArena is ERC1155 {
         require(balanceOf(msg.sender, 1) >= 10, "you don't have enough gold");
         safeTransferFrom(msg.sender, address(this), 1, 10, "0x0");
         _mint(msg.sender, SWORD, 3, "");
+    }
+
+    // alignment preserving cast
+    function addressToBytes32(address _addr) internal pure returns (bytes32) {
+        return bytes32(uint256(uint160(_addr)));
     }
 }
