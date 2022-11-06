@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
 
 export default function PlaerCard() {
-  const { playersList } = useContext(MainContext);
+  const { playersList, currentPlayer, setCurrentPlayer } = useContext(MainContext);
 
   return (
     <Box
