@@ -29,7 +29,7 @@ export default function Game() {
       </Box>
       
       <Box position={"absolute"} top="76%" left="40%">
-        <Button variant="contained">Train 🏋️‍♂️</Button>
+        <Button variant="contained" onClick={() => setRoute("train")}>Train 🏋️‍♂️</Button>
       </Box>
 
       <Box position={"absolute"} top="32%" left="78%">

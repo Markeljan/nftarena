@@ -4,7 +4,7 @@ export const CONTRACTS = {
     //mumbai testnet chainid   
     "Polygon Mumbai": "0x9B42B4993faD01aDDE8E99B117D1F9A0e7eA0B8C", 
     //goerli testnet chainid
-    "Optimism Goerli": "0x9B42B4993faD01aDDE8E99B117D1F9A0e7eA0B8C",
+    "Optimism Goerli": "0xaAeE888DE7DC320C3FadFC55583E8b3a4D847c9C",
 }
 
 export const NFTARENA_ABI = [
@@ -197,6 +197,25 @@ export const NFTARENA_ABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "URIs",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "_mintPlayer",
 		"outputs": [],
@@ -295,6 +314,19 @@ export const NFTARENA_ABI = [
 				"type": "uint256"
 			}
 		],
+		"name": "craftSword",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
 		"name": "endQuest",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -329,6 +361,32 @@ export const NFTARENA_ABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "fightArena",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getMyPlayers",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "_ids",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "account",
 				"type": "address"
@@ -345,6 +403,25 @@ export const NFTARENA_ABI = [
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "owners",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
