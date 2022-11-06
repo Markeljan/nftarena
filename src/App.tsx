@@ -35,11 +35,9 @@ export default function App() {
     NFTARENA_WRITE,
   };
 
-  useEffect(() => {
-    console.log("chain:", chain?.name);
-    console.log("chainName:", chainName);
-    console.log(CONTRACTS[chainName as keyof typeof CONTRACTS]);
-  }, [chainName]);
+  //get array of Players
+  useEffect(() => {}, [NFTARENA_READ]);
+
   return (
     <MainContext.Provider value={mainContext}>
       <Box
@@ -58,7 +56,6 @@ export default function App() {
           alignItems="center"
           gap={5}
         >
-          
           <Game />
           <Mint />
         </Box>
