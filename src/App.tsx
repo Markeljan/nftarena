@@ -1,11 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
-import Game from "./components/Game";
-import Mint from "./components/Mint";
-import Navbar from "./components/Navbar";
+import Game from "../src/components/Game";
+import Mint from "../src/components/Mint";
+import Navbar from "../src/components/Navbar";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
-import { MainContext } from "./contexts/MainContext";
+import { MainContext } from "../src//contexts/MainContext";
 
 interface Player {
   tokenId: number;
