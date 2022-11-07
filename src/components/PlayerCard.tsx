@@ -47,7 +47,7 @@ export default function PlayerCard() {
               <Typography fontSize={14}>🗡️ 00</Typography>
             </Box>
             <Typography fontSize={14}>Nomad ...</Typography>
-            <Typography fontSize={14}>Address: ...</Typography>
+            <Typography fontSize={14}>Owner: ...</Typography>
             <Typography fontSize={14}>Origin: ...</Typography>
             <Typography fontSize={14}>Status: ...</Typography>
 
