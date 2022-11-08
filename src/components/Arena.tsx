@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import CloseIcon from "@mui/icons-material/Close";
+import arena from "/public/arena.jpeg";
 
 export default function Arena({}) {
   const { show, setShow, NFTARENA_WRITE, NFTARENA_READ, currentPlayer, address } =
@@ -61,7 +62,7 @@ export default function Arena({}) {
 
       <Box
         component="img"
-        src="/src/assets/arena.jpeg"
+        src={arena}
         width={"60%"}
         height={"45%"}
         position={"absolute"}

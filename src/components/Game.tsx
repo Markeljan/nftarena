@@ -6,7 +6,8 @@ import Train from "./Train";
 import Quest from "./Quest";
 import Arena from "./Arena";
 import Bridge from "./Bridge";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import gameMap from "/public/game-map.jpeg";
+import MonetizationOnSharpIcon from "@mui/icons-material/MonetizationOnSharp";
 
 export default function Game() {
   const { route, setRoute, show, setShow, NFTARENA_WRITE, NFTARENA_READ, currentPlayer, address } =
@@ -29,11 +30,12 @@ export default function Game() {
       display={route === "game" ? "flex" : "none"}
       flexDirection={"column"}
       position={"relative"}
+      m={2}
     >
       <Box position={"absolute"} top="1%" left="1%">
         <PlayerCard />
       </Box>
-      <Box component="img" width={"100%"} alt="Game Map." src="/src/assets/game-map.jpg" />
+      <Box component="img" width={"100%"} alt="Game Map." src={gameMap} />
 
       <Box position={"absolute"} top="25%" left="25%">
         <Button variant="contained" onClick={() => setShow("arena")}>
@@ -61,19 +63,22 @@ export default function Game() {
 
       <Box
         position={"absolute"}
-        top="1%"
-        left="84%"
+        top="1.5%"
+        left="90.5%"
         alignItems="center"
         bgcolor="#e3f2fd"
-        width={"15%"}
+        width={"8%"}
         height={"8%"}
         justifyContent={"center"}
         display={"flex"}
         sx={{ borderRadius: "10%" }}
       >
-        <Typography variant="h6" fontSize={18}>
-          {gold} Gold 🪙{" "}
-        </Typography>
+        <Box display={"flex"} justifyContent="center" alignItems={"center"} gap={1}>
+          <Typography variant="h6" fontSize={18}>
+            {gold}
+          </Typography>
+          <MonetizationOnSharpIcon />
+        </Box>
       </Box>
 
       <Train />

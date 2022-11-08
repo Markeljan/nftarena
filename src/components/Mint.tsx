@@ -1,13 +1,14 @@
 import { Box, Typography, Button, CardMedia } from "@mui/material";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
+import nftPreview from "/public/nft-preview.gif";
 
 export default function MintPlayer() {
   const { NFTARENA_WRITE, route, setRoute } = useContext(MainContext);
 
   return (
-    <Box display={route === "mint" ? "flex" : "none"} flexDirection={"column"} gap={4}>
-      <Typography> Mint Player </Typography>
+    <Box display={route === "mint" ? "flex" : "none"} flexDirection={"column"} gap={2}>
+      <Typography variant="h5"> Mint Player </Typography>
       <Box
         component="img"
         sx={{
@@ -15,9 +16,9 @@ export default function MintPlayer() {
           width: 350,
         }}
         alt="The house from the offer."
-        src="/src/assets/nft-preview.gif"
+        src={nftPreview}
       />
-      <CardMedia src="../assets/nft-preview.gif" title="NFT Previews" />
+      <CardMedia src={nftPreview} title="NFT Previews" />
 
       <Button onClick={() => NFTARENA_WRITE._mintPlayer()} variant="contained">
         Mint

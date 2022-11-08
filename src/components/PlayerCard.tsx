@@ -1,8 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { ethers, providers } from "ethers";
+import { providers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { MainContext } from "../contexts/MainContext";
+import nftPreview from "/public/nft-preview.gif";
 
 export default function PlayerCard() {
   const { currentPlayer, setCurrentPlayer, userPlayerList } = useContext(MainContext);
@@ -38,7 +39,7 @@ export default function PlayerCard() {
             component="img"
             sx={{ opacity: 1, height: 120, width: 120 }}
             alt="NFT image."
-            src="/src/assets/nft-preview.gif"
+            src={nftPreview}
           />
 
           <Box sx={{ opacity: 1 }} display="flex" flexDirection="column">

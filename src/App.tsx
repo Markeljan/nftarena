@@ -6,6 +6,9 @@ import Mint from "./components/Mint";
 import Navbar from "./components/Navbar";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
+import hyperlane from "/public/hyperlane.png";
+import optimism from "/public/optimism.png";
+import polygon from "/public/polygon.png";
 
 interface Player {
   tokenId: number;
@@ -120,7 +123,7 @@ export default function App() {
               height: 40,
               width: 40,
             }}
-            src="/src/assets/optimism.png"
+            src={optimism}
           />
           <Box
             component="img"
@@ -128,7 +131,7 @@ export default function App() {
               height: 40,
               width: 40,
             }}
-            src="/src/assets/polygon.png"
+            src={polygon}
           />
 
           <Box
@@ -137,7 +140,7 @@ export default function App() {
               height: 40,
               width: 40,
             }}
-            src="/src/assets/hyperlane.png"
+            src={hyperlane}
           />
           <Typography>Built at ETH-Global SF 2022</Typography>
         </Box>
