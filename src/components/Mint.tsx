@@ -18,7 +18,7 @@ export default function MintPlayer() {
         alt="The house from the offer."
         src={nftPreview}
       />
-      <CardMedia src={nftPreview} title="NFT Previews" />
+      <CardMedia src={nftPreview} title="NFT Preview" />
 
       <Button onClick={() => NFTARENA_WRITE._mintPlayer()} variant="contained">
         Mint
