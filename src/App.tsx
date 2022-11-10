@@ -58,6 +58,20 @@ export default function App() {
     setShow,
   };
 
+  useEffect(() => {
+    //fetch NFTs using moralis api
+    async function fetchNFTs() {
+      const response = await fetch(`https://deep-index.moralis.io/api/v2/${address}/nft`, {
+        headers: {
+          "x-api-key": "k0elHqCK8adGJptSKRHRsyp5c6QJXhoCh4ed2dOO9kovfQ2FlXI04XJEQWcr3QjP",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+    }
+    fetchNFTs();
+  }, []);
+
   //get array of Players
   useEffect(() => {
     async function fetchPlayers() {

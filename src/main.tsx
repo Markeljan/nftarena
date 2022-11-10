@@ -24,7 +24,7 @@ const wagmiClient = createClient({
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <WagmiConfig client={wagmiClient}>
     <RainbowKitProvider chains={chains} showRecentTransactions>
-      <App />
+      <App />,
     </RainbowKitProvider>
   </WagmiConfig>
 );
