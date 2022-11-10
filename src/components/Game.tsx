@@ -6,7 +6,7 @@ import Train from "./Train";
 import Quest from "./Quest";
 import Arena from "./Arena";
 import Bridge from "./Bridge";
-import gameMap from "/public/game-map.jpeg";
+import gameMap from "/src/assets/game-map.jpeg";
 import MonetizationOnSharpIcon from "@mui/icons-material/MonetizationOnSharp";
 
 export default function Game() {

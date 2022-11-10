@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../contexts/MainContext";
 import CloseIcon from "@mui/icons-material/Close";
-import arena from "/public/arena.jpeg";
+import arena from "/src/assets/arena.jpeg";
 
 export default function Arena({}) {
   const { show, setShow, NFTARENA_WRITE, NFTARENA_READ, currentPlayer, address } =

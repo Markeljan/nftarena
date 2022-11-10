@@ -3,7 +3,7 @@ import { providers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { MainContext } from "../contexts/MainContext";
-import nftPreview from "/public/nft-preview.gif";
+import nftPreview from "/src/assets/nft-preview.gif";
 
 export default function PlayerCard() {
   const { currentPlayer, setCurrentPlayer, userPlayerList } = useContext(MainContext);

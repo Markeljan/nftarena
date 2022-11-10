@@ -1,7 +1,7 @@
 import { Box, Typography, Button, CardMedia } from "@mui/material";
 import { useContext } from "react";
 import { MainContext } from "../contexts/MainContext";
-import nftPreview from "/public/nft-preview.gif";
+import nftPreview from "/src/assets/nft-preview.gif";
 
 export default function MintPlayer() {
   const { NFTARENA_WRITE, route, setRoute } = useContext(MainContext);

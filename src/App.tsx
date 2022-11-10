@@ -6,9 +6,9 @@ import Mint from "./components/Mint";
 import Navbar from "./components/Navbar";
 import { CONTRACTS, NFTARENA_ABI } from "./constants/contracts";
 import { MainContext } from "./contexts/MainContext";
-import hyperlane from "/public/hyperlane.png";
-import optimism from "/public/optimism.png";
-import polygon from "/public/polygon.png";
+import hyperlane from "/src/assets/hyperlane.png";
+import optimism from "/src/assets/optimism.png";
+import polygon from "/src/assets/polygon.png";
 
 interface Player {
   tokenId: number;
