@@ -66,7 +66,7 @@ export default function Game() {
         top="1.5%"
         left="90.5%"
         alignItems="center"
-        bgcolor="#e3f2fd"
+        bgcolor="RGB(227, 242, 253, 0.75)"
         width={"8%"}
         height={"8%"}
         justifyContent={"center"}

@@ -88,7 +88,7 @@ export default function App() {
 
       for (let i = 0; i < existingIdsArray.length; i++) {
         player = await NFTARENA_READ?.players(existingIdsArray[i]);
-
+        console.log(player);
         const playerObj = {
           tokenId: player[0]?.toNumber(),
           uri: player[1],

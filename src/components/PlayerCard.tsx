@@ -30,7 +30,7 @@ export default function PlayerCard() {
         flexDirection="column"
         justifyContent="space-between"
         alignItems="center"
-        bgcolor="#e3f2fd"
+        bgcolor="RGB(227, 242, 253, 0.75)"
         p={3}
         sx={{ borderRadius: "10%" }}
       >
@@ -72,7 +72,7 @@ export default function PlayerCard() {
       flexDirection="column"
       justifyContent="space-between"
       alignItems="center"
-      bgcolor="#e3f2fd"
+      bgcolor="RGB(227, 242, 253, 0.75)"
       p={3}
       sx={{ borderRadius: "10%" }}
     >
