@@ -38,25 +38,41 @@ export default function Game() {
       <Box component="img" width={"100%"} alt="Game Map." src={gameMap} />
 
       <Box position={"absolute"} top="25%" left="25%">
-        <Button variant="contained" onClick={() => setShow("arena")}>
+        <Button
+          sx={{ backgroundColor: "rgba(41, 121, 255, .75)" }}
+          variant="contained"
+          onClick={() => setShow("arena")}
+        >
           Arena 🥊
         </Button>
       </Box>
 
       <Box position={"absolute"} top="76%" left="40%">
-        <Button variant="contained" onClick={() => setShow("train")}>
+        <Button
+          sx={{ backgroundColor: "rgba(41, 121, 255, .75)" }}
+          variant="contained"
+          onClick={() => setShow("train")}
+        >
           Train 🏋️‍♂️
         </Button>
       </Box>
 
       <Box position={"absolute"} top="32%" left="78%">
-        <Button variant="contained" onClick={() => setShow("quest")}>
+        <Button
+          sx={{ backgroundColor: "rgba(41, 121, 255, .75)" }}
+          variant="contained"
+          onClick={() => setShow("quest")}
+        >
           Quest 💰
         </Button>
       </Box>
 
       <Box position={"absolute"} top="52%" left="85%">
-        <Button variant="contained" onClick={() => setShow("bridge")}>
+        <Button
+          sx={{ backgroundColor: "rgba(41, 121, 255, .75)" }}
+          variant="contained"
+          onClick={() => setShow("bridge")}
+        >
           Bridge 🌊
         </Button>
       </Box>
