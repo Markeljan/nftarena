@@ -30,6 +30,7 @@ export default function App() {
   const provider = useProvider();
   const { data: signer } = useSigner();
   const [show, setShow] = useState("");
+  const MORALIS_API_KEY = "k0elHqCK8adGJptSKRHRsyp5c6QJXhoCh4ed2dOO9kovfQ2FlXI04XJEQWcr3QjP";
 
   const chainName = chain?.name;
   const NFTARENA_ADDRESS = CONTRACTS[chainName as keyof typeof CONTRACTS];
@@ -63,7 +64,7 @@ export default function App() {
     async function fetchNFTs() {
       const response = await fetch(`https://deep-index.moralis.io/api/v2/${address}/nft`, {
         headers: {
-          "x-api-key": "k0elHqCK8adGJptSKRHRsyp5c6QJXhoCh4ed2dOO9kovfQ2FlXI04XJEQWcr3QjP",
+          "x-api-key": MORALIS_API_KEY!,
         },
       });
       const data = await response.json();
