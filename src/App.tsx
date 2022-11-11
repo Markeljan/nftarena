@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
-import { useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
+import { chainId, useAccount, useContract, useNetwork, useProvider, useSigner } from "wagmi";
 import Game from "./components/Game";
 import Mint from "./components/Mint";
 import Navbar from "./components/Navbar";
@@ -30,6 +31,7 @@ export default function App() {
   const provider = useProvider();
   const { data: signer } = useSigner();
   const [show, setShow] = useState("");
+  const addRecentTransaction = useAddRecentTransaction();
   const MORALIS_API_KEY = "k0elHqCK8adGJptSKRHRsyp5c6QJXhoCh4ed2dOO9kovfQ2FlXI04XJEQWcr3QjP";
 
   const chainName = chain?.name;
@@ -50,6 +52,9 @@ export default function App() {
     route,
     setRoute,
     address,
+    chain,
+    signer,
+    provider,
     NFTARENA_READ,
     NFTARENA_WRITE,
     currentPlayer,
@@ -57,16 +62,20 @@ export default function App() {
     userPlayerList,
     show,
     setShow,
+    addRecentTransaction,
   };
 
   useEffect(() => {
     //fetch NFTs using moralis api
     async function fetchNFTs() {
-      const response = await fetch(`https://deep-index.moralis.io/api/v2/${address}/nft`, {
-        headers: {
-          "x-api-key": MORALIS_API_KEY!,
-        },
-      });
+      const response = await fetch(
+        `https://deep-index.moralis.io/api/v2/nft/${NFTARENA_ADDRESS}?chain=goerli&format=decimal&normalizeMetadata=false`,
+        {
+          headers: {
+            "x-api-key": MORALIS_API_KEY!,
+          },
+        }
+      );
       const data = await response.json();
       console.log(data);
     }
@@ -88,7 +97,6 @@ export default function App() {
 
       for (let i = 0; i < existingIdsArray.length; i++) {
         player = await NFTARENA_READ?.players(existingIdsArray[i]);
-        console.log(player);
         const playerObj = {
           tokenId: player[0]?.toNumber(),
           uri: player[1],

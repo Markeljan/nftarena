@@ -42,8 +42,8 @@ export default function Train({}) {
       <Box
         component="img"
         src={currentPlayer && currentPlayer.uri}
-        width={"20%"}
-        height={"30%"}
+        width={"150px"}
+        height={"150px"}
         position={"absolute"}
         top="25%"
         left="40%"

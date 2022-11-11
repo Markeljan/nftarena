@@ -8,6 +8,7 @@ import Arena from "./Arena";
 import Bridge from "./Bridge";
 import gameMap from "/src/assets/game-map.jpeg";
 import MonetizationOnSharpIcon from "@mui/icons-material/MonetizationOnSharp";
+import Invest from "./Invest";
 
 export default function Game() {
   const { route, setRoute, show, setShow, NFTARENA_WRITE, NFTARENA_READ, currentPlayer, address } =
@@ -77,6 +78,16 @@ export default function Game() {
         </Button>
       </Box>
 
+      <Box position={"absolute"} top="52%" left="55%">
+        <Button
+          sx={{ backgroundColor: "rgba(41, 121, 255, .75)" }}
+          variant="contained"
+          onClick={() => setShow("invest")}
+        >
+          Invest 👻
+        </Button>
+      </Box>
+
       <Box
         position={"absolute"}
         top="1.5%"
@@ -101,6 +112,7 @@ export default function Game() {
       <Quest />
       <Arena />
       <Bridge />
+      <Invest />
     </Box>
   );
 }
