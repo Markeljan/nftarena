@@ -73,7 +73,7 @@ export default function Invest({}) {
     );
     addRecentTransaction({
       hash: tx.hash,
-      description: `Supply ${chain.nativeCurrency.symbol} to Aave`,
+      description: `Supply ${chain?.nativeCurrency.symbol} to Aave`,
     });
   };
 
@@ -84,7 +84,7 @@ export default function Invest({}) {
 
     addRecentTransaction({
       hash: tx.hash,
-      description: `Approve ${chain.nativeCurrency.symbol} withdraw from Aave`,
+      description: `Approve ${chain?.nativeCurrency.symbol} withdraw from Aave`,
     });
   };
 
@@ -97,8 +97,17 @@ export default function Invest({}) {
     );
     addRecentTransaction({
       hash: tx.hash,
-      description: `Approve Withdraw ${chain.nativeCurrency.symbol} from Aave`,
+      description: `Approve Withdraw ${chain?.nativeCurrency.symbol} from Aave`,
     });
+  };
+
+  const handleClaimSword = async () => {
+    console.log(currentPlayer);
+    if (suppliedAmount > 0) {
+      const tx = await NFTARENA_WRITE?._mintSword(currentPlayer.tokenId);
+    } else {
+      alert("You must supply ETH to Aave first");
+    }
   };
 
   return (
@@ -124,8 +133,8 @@ export default function Invest({}) {
         <Box
           component="img"
           src={"https://app.aave.com/icons/tokens/matic.svg"}
-          width={"150px"}
-          height={"150px"}
+          width={"50px"}
+          height={"50px"}
         ></Box>
       </Box>
       <TextField
@@ -135,13 +144,13 @@ export default function Invest({}) {
       />
       <Box display="flex" gap={4} px={4}>
         <Button onClick={handleSupplyETH} variant="contained">
-          Supply {chain.nativeCurrency.symbol}
+          Supply {chain?.nativeCurrency.symbol}
         </Button>
         <Button onClick={handleApproveWithdrawETH} variant="contained">
           Approve For Withdraw
         </Button>
         <Button onClick={handleWithdrawETH} variant="contained">
-          Withdraw {chain.nativeCurrency.symbol}
+          Withdraw {chain?.nativeCurrency.symbol}
         </Button>
       </Box>
       <Box>
@@ -153,6 +162,11 @@ export default function Invest({}) {
               chain?.nativeCurrency?.symbol
             : "You have not invested."}
         </Typography>
+        <Box display="flex" m={2}>
+          <Button onClick={handleClaimSword} variant="contained">
+            Claim AAVE Sword
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
