@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { providers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
@@ -91,7 +91,14 @@ export default function PlayerCard() {
             </Box>
             <Typography fontSize={14}>Nomad {currentPlayer.tokenId}</Typography>
             <Typography fontSize={14}>
-              Address: {ENS ? ENS : currentPlayer.address.substring(0, 6)}
+              Address:{" "}
+              <Link
+                href={`https://etherscan.io/address/${currentPlayer.address}`}
+                target="_blank"
+                rel="noopener"
+              >
+                {ENS ? ENS : currentPlayer.address.substring(0, 6)}
+              </Link>
             </Typography>
             <Typography fontSize={14}>
               Origin:{" "}

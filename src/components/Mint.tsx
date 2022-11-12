@@ -4,11 +4,11 @@ import { MainContext } from "../contexts/MainContext";
 import nftPreview from "/src/assets/nft-preview.gif";
 
 export default function MintPlayer() {
-  const { NFTARENA_WRITE, route, setRoute } = useContext(MainContext);
+  const { NFTARENA_WRITE, route, setRoute, playersList } = useContext(MainContext);
 
   return (
     <Box display={route === "mint" ? "flex" : "none"} flexDirection={"column"} gap={2}>
-      <Typography variant="h5"> Mint Player </Typography>
+      <Typography variant="h5"> Mint Player ({playersList.length} / 598)</Typography>
       <Box
         component="img"
         sx={{

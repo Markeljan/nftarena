@@ -63,6 +63,7 @@ export default function App() {
     show,
     setShow,
     addRecentTransaction,
+    playersList,
   };
 
   useEffect(() => {

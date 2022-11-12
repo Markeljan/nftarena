@@ -5,10 +5,7 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 
-const { chains, provider } = configureChains(
-  [chain.polygonMumbai, chain.optimismGoerli, chain.goerli],
-  [publicProvider()]
-);
+const { chains, provider } = configureChains([chain.polygonMumbai], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: "NFT Arena",

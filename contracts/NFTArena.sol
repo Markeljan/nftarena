@@ -4,138 +4,28 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import {IMessageRecipient} from "@hyperlane-xyz/core/interfaces/IMessageRecipient.sol";
-import {IOutbox} from "@hyperlane-xyz/core/interfaces/IOutbox.sol";
 
-contract NFTArena is ERC1155, IMessageRecipient {
-    uint32 constant mumbaiDomain = 80001;
-    address public mumbaiRecipient;
-
-    uint32 constant optimismDomain = 420;
-    address public optimismRecipient;
-
-    uint32 constant goerliDomain = 5;
-    address public goerliRecipient;
-    address public activeOutbox;
-
-    IOutbox public OUTBOX;
-
-    function bridgePolygon(uint256 _tokenId)
-        public
-        isIdle(_tokenId)
-        returns (uint256)
-    {
-        require(players[_tokenId].owner == msg.sender);
-        Player memory playerRef = players[_tokenId];
-        sent += 1;
-        sentTo[mumbaiDomain] += 1;
-        uint256 sendId = OUTBOX.dispatch(
-            mumbaiDomain,
-            addressToBytes32(mumbaiRecipient),
-            abi.encode(
-                playerRef.tokenId,
-                playerRef.uri,
-                playerRef.owner,
-                playerRef.originDomain,
-                playerRef.hp,
-                playerRef.attack,
-                playerRef.status
-            )
-        );
-        emit SentMessageBridgeNFT(localDomain, msg.sender, _tokenId, playerRef);
-        players[_tokenId].status = Status.bridging;
-        return sendId;
-    }
-
-    function bridgeOptimism(uint256 _tokenId)
-        public
-        isIdle(_tokenId)
-        returns (uint256)
-    {
-        require(players[_tokenId].owner == msg.sender);
-        Player memory playerRef = players[_tokenId];
-        sent += 1;
-        sentTo[optimismDomain] += 1;
-        uint256 sendId = OUTBOX.dispatch(
-            optimismDomain,
-            addressToBytes32(optimismRecipient),
-            abi.encode(
-                playerRef.tokenId,
-                playerRef.uri,
-                playerRef.owner,
-                playerRef.originDomain,
-                playerRef.hp,
-                playerRef.attack,
-                playerRef.status
-            )
-        );
-        emit SentMessageBridgeNFT(localDomain, msg.sender, _tokenId, playerRef);
-        players[_tokenId].status = Status.bridging;
-        return sendId;
-    }
-
-    function bridgeGoerli(uint256 _tokenId)
-        public
-        isIdle(_tokenId)
-        returns (uint256)
-    {
-        require(players[_tokenId].owner == msg.sender);
-        Player memory playerRef = players[_tokenId];
-        sent += 1;
-        sentTo[goerliDomain] += 1;
-        uint256 sendId = OUTBOX.dispatch(
-            goerliDomain,
-            addressToBytes32(goerliRecipient),
-            abi.encode(
-                playerRef.tokenId,
-                playerRef.uri,
-                playerRef.owner,
-                playerRef.originDomain,
-                playerRef.hp,
-                playerRef.attack,
-                playerRef.status
-            )
-        );
-        emit SentMessageBridgeNFT(localDomain, msg.sender, _tokenId, playerRef);
-        players[_tokenId].status = Status.bridging;
-        return sendId;
-    }
-
-    function ChangeRecipientMumbai(address _recipient) public {
-        mumbaiRecipient = _recipient;
-    }
-
-    function ChangeRecipientOptimism(address _recipient) public {
-        optimismRecipient = _recipient;
-    }
-
-    function ChangeRecipientGoerli(address _recipient) public {
-        goerliRecipient = _recipient;
-    }
-
+contract NFTArena is ERC1155 {
     uint256 public constant PLAYER = 0;
-    uint256 public constant GOLD = 1;
-    uint256 public constant SILVER = 2;
-    uint256 public constant SWORD = 3;
-    uint256 public constant SHIELD = 4;
+    uint256 public constant GOLD = 0;
+    uint256 public constant ITEM = 0;
 
     string private baseURI;
     uint256 public playerCount;
+    uint256 public itemCount = 5000;
     bool public arenaOpen;
     Arena public arena = Arena(true, 0, payable(msg.sender));
 
-    //mapping(address => uint) public profiles;
     mapping(uint => Player) public players;
+    mapping(uint => Item) public items;
     mapping(uint => Quest) public quests;
     mapping(uint => Train) public trainings;
-    mapping(uint => uint) public URIs;
-    mapping(uint => address) public owners;
 
     enum Status {
         idle,
         questing,
         training,
-        bridging
+        arena
     }
 
     enum Origin {
@@ -151,6 +41,15 @@ contract NFTArena is ERC1155, IMessageRecipient {
         uint256 hp;
         uint256 attack;
         Status status;
+        bool invested;
+    }
+
+    struct Item {
+        uint256 tokenId;
+        string ItemName;
+        uint256 hpBonus;
+        uint256 attackBonus;
+        string uri;
     }
 
     struct Quest {
@@ -169,149 +68,59 @@ contract NFTArena is ERC1155, IMessageRecipient {
         address payable hostAddress;
     }
 
-    uint32 public localDomain;
-
     constructor()
         ERC1155(
             "https://bafybeihfvy2hmcnvpax6anx3tgx53qie4nj32eqtuehsu2g5c5hx3ukxc4.ipfs.nftstorage.link/"
         )
     {
         baseURI = "https://bafybeihfvy2hmcnvpax6anx3tgx53qie4nj32eqtuehsu2g5c5hx3ukxc4.ipfs.nftstorage.link/";
-
-        address mumbaiOutbox = 0xe17c37212d785760E8331D4A4395B17b34Ba8cDF;
-        address goerliOutbox = 0xDDcFEcF17586D08A5740B7D91735fcCE3dfe3eeD;
-        address optimismGoerliOutbox = 0x54148470292C24345fb828B003461a9444414517;
-
-        localDomain = uint32(block.chainid);
-
-        if (localDomain == goerliDomain) activeOutbox = goerliOutbox;
-        else if (localDomain == mumbaiDomain) activeOutbox = mumbaiOutbox;
-        else if (localDomain == optimismDomain)
-            activeOutbox = optimismGoerliOutbox;
-
-        OUTBOX = IOutbox(activeOutbox);
     }
-
-    /////////////////////////HyperLane/////////////////////
-    //////////////////////CrossChain Messaging///////////////////
-    ///////////////////////////////////////////////////////////
-
-    event SentMessageBridgeNFT(
-        uint32 indexed origin,
-        address indexed owner,
-        uint256 indexed _tokenId,
-        Player playerRef
-    );
-
-    event ReceivedMessageBridgeNFT(
-        uint32 indexed origin,
-        address owner,
-        uint256 indexed _tokenId
-    );
-
-    uint256 public sent;
-    uint256 public received;
-    mapping(uint32 => uint256) public sentTo;
-    mapping(uint32 => uint256) public receivedFrom;
 
     uint256[] public tokenIdsArray;
-
-    function handle(
-        uint32 _origin,
-        bytes32 _sender,
-        bytes memory _messageBody
-    ) public {
-        received += 1;
-        receivedFrom[_origin] += 1;
-
-        (
-            uint256 _tokenId,
-            string memory _uri,
-            address _owner,
-            uint32 _originDomain,
-            uint256 _hp,
-            uint256 _attack,
-            Status _status
-        ) = abi.decode(
-                _messageBody,
-                (uint256, string, address, uint32, uint256, uint256, Status)
-            );
-
-        _reMintPlayer(
-            _tokenId,
-            _uri,
-            _owner,
-            _originDomain,
-            _hp,
-            _attack,
-            _status
-        );
-
-        emit ReceivedMessageBridgeNFT(_origin, address(this), 9999);
-    }
+    uint256[] public itemIdsArray;
 
     modifier isIdle(uint256 _tokenId) {
         require(players[_tokenId].status == Status.idle);
         _;
     }
 
+    function _mintItem(
+        string memory _itemName,
+        uint256 _hpBonus,
+        uint256 _attackBonus
+    ) public {
+        itemCount++;
+        _mint(msg.sender, ITEM, 1, "");
+        itemIdsArray.push(itemCount);
+        items[itemCount] = Item(
+            itemCount,
+            _itemName,
+            _hpBonus,
+            _attackBonus,
+            "https://bafybeiflikqwevm55y5cgmunqxpdyl34swngimcsj652nnmi67ojefy2ji.ipfs.nftstorage.link/aaveSword.png"
+        );
+    }
+
     function _mintPlayer() external {
         playerCount++;
         _mint(msg.sender, PLAYER, 1, "");
-        tokenIdsArray.push(localDomain + playerCount);
+        tokenIdsArray.push(playerCount);
 
-        uint hpBonus = 0;
-        uint attackBonus = 0;
-
-        if (localDomain == goerliDomain) hpBonus = 5;
-        if (localDomain == mumbaiDomain) {
-            hpBonus = 2;
-            attackBonus = 1;
-        }
-        if (localDomain == optimismDomain) attackBonus = 2;
-
-        players[localDomain + playerCount] = Player(
-            localDomain + playerCount,
+        players[playerCount] = Player(
+            playerCount,
             uri(playerCount),
             msg.sender,
-            localDomain,
-            10 + hpBonus,
-            1 + attackBonus,
-            Status.idle
+            80001,
+            10,
+            1,
+            Status.idle,
+            false
         );
-        quests[localDomain + playerCount] = Quest(0, false);
-        trainings[localDomain + playerCount] = Train(0, false);
-    }
-
-    function _reMintPlayer(
-        uint256 _tokenId,
-        string memory _uri,
-        address _owner,
-        uint32 _originDomain,
-        uint256 _hp,
-        uint256 _attack,
-        Status _status
-    ) public {
-        playerCount++;
-        _mint(_owner, PLAYER, 1, "");
-
-        tokenIdsArray.push(_tokenId);
-
-        players[_tokenId] = Player(
-            _tokenId,
-            _uri,
-            _owner,
-            _originDomain,
-            _hp,
-            _attack,
-            _status
-        );
-        quests[_tokenId] = Quest(0, false);
-        trainings[_tokenId] = Train(0, false);
+        quests[playerCount] = Quest(0, false);
+        trainings[playerCount] = Train(0, false);
     }
 
     function uri(uint256 _id) public view override returns (string memory) {
-        //require(_exists(id), "Nonexistant token");
         string memory s = string(
             abi.encodePacked(baseURI, Strings.toString(_id), ".png")
         );
@@ -368,6 +177,7 @@ contract NFTArena is ERC1155, IMessageRecipient {
 
         arena.hostId = _tokenId;
         arena.hostAddress = payable(msg.sender);
+        players[_tokenId].status = Status.arena;
     }
 
     function fightArena(uint256 _tokenId) public isIdle(_tokenId) {
@@ -406,12 +216,6 @@ contract NFTArena is ERC1155, IMessageRecipient {
                     )
                 )
             );
-    }
-
-    function craftSword(uint256 _tokenId) external isIdle(_tokenId) {
-        require(balanceOf(msg.sender, 1) >= 10);
-        safeTransferFrom(msg.sender, address(this), 1, 10, "0x0");
-        _mint(msg.sender, SWORD, 3, "");
     }
 
     // alignment preserving cast
