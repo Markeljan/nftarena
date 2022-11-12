@@ -84,21 +84,22 @@ contract NFTArena is ERC1155 {
         _;
     }
 
-    function _mintItem(
-        string memory _itemName,
-        uint256 _hpBonus,
-        uint256 _attackBonus
-    ) public {
+    mapping(address => bool) addressToMintedSword;
+
+    function _mintSword(uint256 _tokenId) public {
+        require(addressToMintedSword[msg.sender] == false);
         itemCount++;
         _mint(msg.sender, ITEM, 1, "");
         itemIdsArray.push(itemCount);
         items[itemCount] = Item(
             itemCount,
-            _itemName,
-            _hpBonus,
-            _attackBonus,
+            "AAVE Sword",
+            0,
+            2,
             "https://bafybeiflikqwevm55y5cgmunqxpdyl34swngimcsj652nnmi67ojefy2ji.ipfs.nftstorage.link/aaveSword.png"
         );
+        players[_tokenId].attack += 2;
+        addressToMintedSword[msg.sender] = true;
     }
 
     function _mintPlayer() external {
